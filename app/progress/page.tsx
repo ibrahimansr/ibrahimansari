@@ -54,7 +54,7 @@ export default function Progress() {
 
         <div className="custom-body section-border">
           <div className="pt-6" />
-          <footer className="pb-16 sm:pb-24">
+          <footer className="pb-6">
             <div className="custom-contact">contact</div>
             <div className="mt-4 flex items-center gap-6">
               <a className="hover-scale" href="mailto:ibrahim.ansari4161@gmail.com" title="Email">
