@@ -45,6 +45,8 @@ const FaceGestureTracker = () => {
       const currentPath = window.location.pathname;
       if (currentPath === '/') {
         router.push('/about');
+      } else if (currentPath === '/about') {
+        router.push('/progress');
       } else {
         router.push('/');
       }
