@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 95%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 10%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
@@ -74,13 +74,59 @@
   }
 }
 
-/* Dot grid background */
+/* ML/Data Science inspired background */
 @layer utilities {
   .bg-grid {
-    background-image: radial-gradient(circle, hsl(var(--grid)) 1px, transparent 1px);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 0;
+    position: relative;
+    background: #ffffff;
+    /* Subtle neural network/data flow pattern */
+    background-image: 
+      /* Connection nodes */
+      radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 85% 35%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 45% 75%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 85%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+      /* Data flow lines (subtle) */
+      linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.03) 25%, transparent 50%),
+      linear-gradient(45deg, transparent 0%, rgba(139, 92, 246, 0.03) 25%, transparent 50%),
+      linear-gradient(225deg, transparent 0%, rgba(236, 72, 153, 0.03) 25%, transparent 50%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%, 200% 200%, 200% 200%;
+    background-position: 0 0, 100% 0, 0 100%, 100% 100%, 0 0, 100% 0, 0 100%;
+    animation: ml-pulse 15s ease-in-out infinite;
   }
+
+  @keyframes ml-pulse {
+    0%, 100% {
+      background-position: 0 0, 100% 0, 0 100%, 100% 100%, 0 0, 100% 0, 0 100%;
+      opacity: 1;
+    }
+    50% {
+      background-position: 5% 5%, 95% 5%, 5% 95%, 95% 95%, 10% 10%, 90% 10%, 10% 90%;
+      opacity: 0.8;
+    }
+  }
+
+  /* Optional: Photo background overlay (uncomment to use instead of pattern) */
+  /*
+  .bg-grid {
+    background: hsl(var(--background));
+  }
+  .bg-grid::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    z-index: -1;
+    filter: grayscale(60%) blur(2px);
+    pointer-events: none;
+  }
+  */
 
   .link-minimal {
     @apply underline underline-offset-[4px] decoration-transparent hover:decoration-foreground/40 transition-colors;
@@ -189,12 +235,7 @@
 
   /* Section borders */
   .section-border {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 24px;
     margin: 16px 0;
-    background: rgba(255, 255, 255, 0.5);
-    transition: all 0.3s ease;
   }
 
   /* Eye tracking feedback */

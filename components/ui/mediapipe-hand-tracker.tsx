@@ -59,7 +59,11 @@ const FaceGestureTracker = () => {
       
       const faceMesh = new FaceMesh({
         locateFile: (file) => {
-          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+          // Try unpkg CDN first, fallback to jsdelivr
+          if (file.includes('_wasm')) {
+            return `https://unpkg.com/@mediapipe/face_mesh/${file}`;
+          }
+          return `https://unpkg.com/@mediapipe/face_mesh/${file}`;
         }
       });
 
@@ -83,7 +87,9 @@ const FaceGestureTracker = () => {
       faceMeshRef.current = faceMesh;
       return faceMesh;
     } catch (err) {
-      setError('Failed to initialize face detection');
+      console.error('MediaPipe initialization error:', err);
+      setError('Failed to load face detection. Please check your connection.');
+      setIsTracking(false);
       return null;
     }
   }, []);

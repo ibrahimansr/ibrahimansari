@@ -51,7 +51,7 @@ export default function About() {
                 alt="Nemzzz"
                 width={40}
                 height={40}
-                className="rounded-lg object-cover"
+                className="object-cover"
               />
               <div className="flex-1">
                 <a className="hover-scale" href="https://open.spotify.com/track/7H5CsjEafNygkvcm69RevN?si=2a55ad0752784678" target="_blank" rel="noreferrer">cold — nemzzz</a>
@@ -64,7 +64,7 @@ export default function About() {
                 alt="Yeat"
                 width={40}
                 height={40}
-                className="rounded-lg object-cover"
+                className="object-cover"
               />
               <div className="flex-1">
                 <a className="hover-slide" href="https://open.spotify.com/track/5SaKYcCTEdCkacDamzfRfX?si=8c5cef0586da43f1" target="_blank" rel="noreferrer">2tone — yeat, don toliver</a>
@@ -77,7 +77,7 @@ export default function About() {
                 alt="Frank Sinatra"
                 width={40}
                 height={40}
-                className="rounded-lg object-cover"
+                className="object-cover"
               />
               <div className="flex-1">
                 <a className="hover-glow" href="https://open.spotify.com/track/5b7OgznPJJr1vHNYGyvxau?si=a1c8f067770e4967" target="_blank" rel="noreferrer">fly me to the moon — frank sinatra</a>
@@ -91,34 +91,34 @@ export default function About() {
 
         <div className="custom-body space-y-4 section-border">
           <div className="custom-section-title">photo gallery</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-3">
+          <div className="flex flex-row gap-6 overflow-x-auto">
+            <div className="space-y-3 flex-shrink-0">
               <Image
                 src="/Activity from Ibrahim Khawar.jpeg"
                 alt="UNESCO Award"
                 width={300}
                 height={200}
-                className="rounded-lg object-cover w-full h-48"
+                className="object-cover w-full h-48"
               />
               <div className="text-neutral-600 custom-small">got CC UNESCO Award for Scholarly Communication</div>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3 flex-shrink-0">
               <Image
                 src="/37.jpg"
                 alt="HammerHacks"
                 width={300}
                 height={200}
-                className="rounded-lg object-cover w-full h-48"
+                className="object-cover w-full h-48"
               />
               <div className="text-neutral-600 custom-small">winning project at HammerHacks with good friends</div>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3 flex-shrink-0">
               <Image
                 src="/IMG_7138.jpeg"
                 alt="Education Presentation"
                 width={300}
                 height={200}
-                className="rounded-lg object-cover w-full h-48"
+                className="object-cover w-full h-48"
               />
               <div className="text-neutral-600 custom-small">presented findings about Ontario education budgeting to some big names</div>
             </div>

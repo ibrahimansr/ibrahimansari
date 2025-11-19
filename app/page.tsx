@@ -64,27 +64,21 @@ export default function Home() {
         >
           <div className="custom-section-title">experience</div>
           <div className="flex items-center gap-3">
-            <div className="shadow-md rounded-lg p-3 bg-white">
-              <Logo src="/Brikli Logo.jpeg" alt="Brikli" size={36} />
-            </div>
+            <Logo src="/brikli-logo.png" alt="Brikli" size={36} />
             <div>
               <div className="custom-project-title">software engineer — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="hover-glow">brikli</a></div>
               <div className="text-neutral-600 custom-small">making housing easier</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="shadow-md rounded-lg p-3 bg-white">
-              <Logo src="/Tablingos Overview.jpeg" alt="Tablingos" size={36} />
-            </div>
+            <Logo src="/tablingos-logo.png" alt="Tablingos" size={36} />
             <div>
               <div className="custom-project-title">co‑founder — <a href="https://www.linkedin.com/company/tablingos/about/" target="_blank" rel="noreferrer" className="hover-glow">tablingos</a></div>
               <div className="text-neutral-600 custom-small">data automation backed by Microsoft</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="shadow-md rounded-lg p-3 bg-white">
-              <Logo src="/WWF International Logo.jpeg" alt="WWF" size={36} />
-            </div>
+            <Logo src="/wwf-logo.png" alt="WWF" size={36} />
             <div>
               <div className="custom-project-title">data scientist intern — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="hover-glow">wwf</a></div>
               <div className="text-neutral-600 custom-small">using data science to do good</div>
@@ -100,7 +94,7 @@ export default function Home() {
         >
           <div className="custom-section-title">projects</div>
           <div>
-            <div className="custom-project-title"><a className="hover-scale" href="https://github.com/ibrahim-ansari-code/UFC-prediction/tree/main" target="_blank" rel="noreferrer">ufc predictor</a></div>
+            <div className="custom-project-title"><a className="hover-scale" href="https://github.com/ibrahim-ansari-code/Islam-or-JDM" target="_blank" rel="noreferrer">ufc predictor</a></div>
             <div className="text-neutral-600 custom-small">because i lost too much money betting</div>
           </div>
           <div>

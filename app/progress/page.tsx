@@ -40,7 +40,7 @@ export default function Progress() {
         <div className="custom-body space-y-6 section-border">
           <div className="custom-section-title">weekly updates</div>
           
-          <div className="space-y-3 pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0">
+          <div className="space-y-3 pb-4 last:pb-0">
             <div className="text-neutral-500 custom-small">
               November 2nd - 8th, 2024
             </div>
