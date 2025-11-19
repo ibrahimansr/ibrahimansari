@@ -25,17 +25,20 @@ export default function Progress() {
       <div className="relative z-10 mx-auto max-w-screen-md px-6 sm:px-4">
         <div className="pt-16 sm:pt-24" />
 
-        <div className="custom-body space-y-4 animate-[fadeIn_500ms_ease]">
-          <div className="flex items-center justify-between">
-            <h1 className="custom-header">Progress</h1>
-            <div className="flex items-center gap-4">
-              <Link href="/about" className="font-extralight hover-scale">other</Link>
-              <Link href="/" className="font-extralight hover-scale">home</Link>
-            </div>
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-4 min-w-[120px]">
+            <Link href="/" className="font-extralight hover-scale text-left">home</Link>
+            <Link href="/progress" className="font-extralight hover-scale text-left">progress</Link>
+            <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
+            <Link href="/gallery" className="font-extralight hover-scale text-left">gallery</Link>
           </div>
-        </div>
 
-        <div className="custom-divider" />
+          <div className="flex-1">
+            <div className="custom-body space-y-4 animate-[fadeIn_500ms_ease]">
+              <h1 className="custom-header">Progress</h1>
+            </div>
+
+            <div className="custom-divider" />
 
         <div className="custom-body space-y-6 section-border">
           <div className="custom-section-title">weekly updates</div>
@@ -74,6 +77,8 @@ export default function Progress() {
               </a>
             </div>
           </footer>
+        </div>
+          </div>
         </div>
       </div>
     </main>

@@ -30,31 +30,24 @@ export default function Home() {
       <div className="relative z-10 mx-auto max-w-screen-md px-6 sm:px-4">
         <div className="pt-16 sm:pt-24" />
 
-        <div className="custom-body space-y-4 animate-[fadeIn_400ms_ease]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <h1 className="custom-header">Ibrahim Ansari</h1>
-              <Logo src="/waterloo-logo.png" alt="University of Waterloo" size={32} />
-            </div>
-            <div className="flex items-center gap-4">
-              <Link 
-                href="/progress" 
-                className="font-extralight hover-scale"
-              >
-                progress
-              </Link>
-              <Link 
-                href="/about" 
-                className="font-extralight hover-scale"
-              >
-                other
-              </Link>
-            </div>
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-4 min-w-[120px]">
+            <Link href="/" className="font-extralight hover-scale text-left">home</Link>
+            <Link href="/progress" className="font-extralight hover-scale text-left">progress</Link>
+            <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
+            <Link href="/gallery" className="font-extralight hover-scale text-left">gallery</Link>
           </div>
-          <div className="text-neutral-600">
-            <span>management engineering @ uwaterloo</span>
-          </div>
-        </div>
+
+          <div className="flex-1">
+            <div className="custom-body space-y-4 animate-[fadeIn_400ms_ease]">
+              <div className="flex items-center gap-3">
+                <h1 className="custom-header">Ibrahim Ansari</h1>
+                <Logo src="/waterloo-logo.png" alt="University of Waterloo" size={32} />
+              </div>
+              <div className="text-neutral-600">
+                <span>management engineering @ uwaterloo</span>
+              </div>
+            </div>
 
         <div className="custom-divider-thick" />
 
@@ -157,6 +150,8 @@ export default function Home() {
               </a>
             </div>
           </footer>
+        </div>
+          </div>
         </div>
       </div>
     </main>

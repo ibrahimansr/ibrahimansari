@@ -44,9 +44,11 @@ const FaceGestureTracker = () => {
       setTimeout(() => setNavigationCooldown(false), NAVIGATION_COOLDOWN);
       const currentPath = window.location.pathname;
       if (currentPath === '/') {
+        router.push('/progress');
+      } else if (currentPath === '/progress') {
         router.push('/about');
       } else if (currentPath === '/about') {
-        router.push('/progress');
+        router.push('/gallery');
       } else {
         router.push('/');
       }

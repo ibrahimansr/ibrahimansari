@@ -30,17 +30,20 @@ export default function About() {
       <div className="relative z-10 mx-auto max-w-screen-md px-6 sm:px-4">
         <div className="pt-16 sm:pt-24" />
 
-        <div className="custom-body space-y-4 animate-[fadeIn_500ms_ease]">
-          <div className="flex items-center justify-between">
-            <h1 className="custom-header">Other</h1>
-            <div className="flex items-center gap-4">
-              <Link href="/progress" className="font-extralight hover-scale">progress</Link>
-              <Link href="/" className="font-extralight hover-scale">home</Link>
-            </div>
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-4 min-w-[120px]">
+            <Link href="/" className="font-extralight hover-scale text-left">home</Link>
+            <Link href="/progress" className="font-extralight hover-scale text-left">progress</Link>
+            <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
+            <Link href="/gallery" className="font-extralight hover-scale text-left">gallery</Link>
           </div>
-        </div>
 
-        <div className="custom-divider" />
+          <div className="flex-1">
+            <div className="custom-body space-y-4 animate-[fadeIn_500ms_ease]">
+              <h1 className="custom-header">Other</h1>
+            </div>
+
+            <div className="custom-divider" />
 
         <div className="custom-body space-y-4 section-border">
           <div className="custom-section-title">music</div>
@@ -90,37 +93,37 @@ export default function About() {
         <div className="custom-divider-thick" />
 
         <div className="custom-body space-y-4 section-border">
-          <div className="custom-section-title">photo gallery</div>
-          <div className="flex flex-row gap-6 overflow-x-auto">
-            <div className="space-y-3 flex-shrink-0">
-              <Image
-                src="/Activity from Ibrahim Khawar.jpeg"
-                alt="UNESCO Award"
-                width={300}
-                height={200}
-                className="object-cover w-full h-48"
-              />
-              <div className="text-neutral-600 custom-small">got CC UNESCO Award for Scholarly Communication</div>
+          <div className="custom-section-title">recommendations</div>
+          <div className="space-y-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">📺</span>
+                <a href="https://youtube.com/playlist?list=PLbVdwtmx18suCuPDLce5slcf8uCyJREBp&si=5-I5ZCir-qS7mnth" target="_blank" rel="noreferrer" className="text-neutral-800 hover:underline font-medium">Humsafar</a>
+              </div>
             </div>
-            <div className="space-y-3 flex-shrink-0">
-              <Image
-                src="/37.jpg"
-                alt="HammerHacks"
-                width={300}
-                height={200}
-                className="object-cover w-full h-48"
-              />
-              <div className="text-neutral-600 custom-small">winning project at HammerHacks with good friends</div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">📺</span>
+                <a href="https://youtube.com/playlist?list=PLb2aaNHUy_gHlSsv6128U9ZeoAPbZyBuj&si=SwvlyKsYF313vbWB" target="_blank" rel="noreferrer" className="text-neutral-800 hover:underline font-medium">Kabhi Main Kabhi Tum</a>
+              </div>
             </div>
-            <div className="space-y-3 flex-shrink-0">
-              <Image
-                src="/IMG_7138.jpeg"
-                alt="Education Presentation"
-                width={300}
-                height={200}
-                className="object-cover w-full h-48"
-              />
-              <div className="text-neutral-600 custom-small">presented findings about Ontario education budgeting to some big names</div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">📚</span>
+                <a href="https://archive.org/details/universalguideto0000coxb" target="_blank" rel="noreferrer" className="text-neutral-800 hover:underline font-medium">Universal: A Guide to the Cosmos</a>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🎬</span>
+                <a href="https://watch32.sx/movie/watch-spider-man-into-the-spider-verse-sequel-full-66674" target="_blank" rel="noreferrer" className="text-neutral-800 hover:underline font-medium">Spider-Man: Across The Spider-Verse</a>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🎬</span>
+                <a href="https://watch32.sx/movie/watch-a-man-called-otto-full-91870" target="_blank" rel="noreferrer" className="text-neutral-800 hover:underline font-medium">A Man Called Otto</a>
+              </div>
             </div>
           </div>
         </div>
@@ -149,6 +152,8 @@ export default function About() {
               </a>
             </div>
           </footer>
+        </div>
+          </div>
         </div>
       </div>
     </main>
