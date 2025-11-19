@@ -82,14 +82,14 @@
     /* Subtle neural network/data flow pattern */
     background-image: 
       /* Connection nodes */
-      radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 85% 35%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 45% 75%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 75% 85%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 85% 35%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 45% 75%, rgba(236, 72, 153, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 75% 85%, rgba(34, 197, 94, 0.04) 0%, transparent 50%),
       /* Data flow lines (subtle) */
-      linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.03) 25%, transparent 50%),
-      linear-gradient(45deg, transparent 0%, rgba(139, 92, 246, 0.03) 25%, transparent 50%),
-      linear-gradient(225deg, transparent 0%, rgba(236, 72, 153, 0.03) 25%, transparent 50%);
+      linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.015) 25%, transparent 50%),
+      linear-gradient(45deg, transparent 0%, rgba(139, 92, 246, 0.015) 25%, transparent 50%),
+      linear-gradient(225deg, transparent 0%, rgba(236, 72, 153, 0.015) 25%, transparent 50%);
     background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%, 200% 200%, 200% 200%;
     background-position: 0 0, 100% 0, 0 100%, 100% 100%, 0 0, 100% 0, 0 100%;
     animation: ml-pulse 15s ease-in-out infinite;

@@ -51,7 +51,7 @@ export default function About() {
                 alt="Nemzzz"
                 width={40}
                 height={40}
-                className="object-cover"
+                className="object-cover rounded-lg"
               />
               <div className="flex-1">
                 <a className="hover-scale" href="https://open.spotify.com/track/7H5CsjEafNygkvcm69RevN?si=2a55ad0752784678" target="_blank" rel="noreferrer">cold — nemzzz</a>
@@ -64,7 +64,7 @@ export default function About() {
                 alt="Yeat"
                 width={40}
                 height={40}
-                className="object-cover"
+                className="object-cover rounded-lg"
               />
               <div className="flex-1">
                 <a className="hover-slide" href="https://open.spotify.com/track/5SaKYcCTEdCkacDamzfRfX?si=8c5cef0586da43f1" target="_blank" rel="noreferrer">2tone — yeat, don toliver</a>
@@ -77,7 +77,7 @@ export default function About() {
                 alt="Frank Sinatra"
                 width={40}
                 height={40}
-                className="object-cover"
+                className="object-cover rounded-lg"
               />
               <div className="flex-1">
                 <a className="hover-glow" href="https://open.spotify.com/track/5b7OgznPJJr1vHNYGyvxau?si=a1c8f067770e4967" target="_blank" rel="noreferrer">fly me to the moon — frank sinatra</a>

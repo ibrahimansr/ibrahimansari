@@ -1,5 +1,5 @@
 {
+  "/progress/page": "app/progress/page.js",
   "/about/page": "app/about/page.js",
-  "/page": "app/page.js",
-  "/progress/page": "app/progress/page.js"
+  "/page": "app/page.js"
 }

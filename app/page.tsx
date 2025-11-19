@@ -8,7 +8,7 @@ import { Mail, Github, Linkedin, Twitter, Instagram } from "lucide-react";
 
 function Logo({ src, alt, size = 18 }: { src: string; alt: string; size?: number }) {
   return (
-    <span className="inline-flex items-center align-middle">
+    <span className="inline-flex items-center justify-center self-center">
       <Image
         src={src}
         alt={alt}
@@ -17,7 +17,7 @@ function Logo({ src, alt, size = 18 }: { src: string; alt: string; size?: number
         sizes={`${size}px`}
         quality={100}
         priority={false}
-        className={`h-[${size}px] w-[${size}px] object-contain align-middle`}
+        className={`h-[${size}px] w-[${size}px] object-contain`}
       />
     </span>
   );
@@ -63,22 +63,28 @@ export default function Home() {
           className="custom-body space-y-4 animate-[fadeIn_600ms_ease] section-border"
         >
           <div className="custom-section-title">experience</div>
-          <div className="flex items-center gap-3">
-            <Logo src="/brikli-logo.png" alt="Brikli" size={36} />
+          <div className="flex items-start gap-3">
+            <div className="flex items-center pt-0.5">
+              <Logo src="/brikli-logo.png" alt="Brikli" size={36} />
+            </div>
             <div>
               <div className="custom-project-title">software engineer — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="hover-glow">brikli</a></div>
               <div className="text-neutral-600 custom-small">making housing easier</div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Logo src="/tablingos-logo.png" alt="Tablingos" size={36} />
+          <div className="flex items-start gap-3">
+            <div className="flex items-center pt-0.5">
+              <Logo src="/tablingos-logo.png" alt="Tablingos" size={36} />
+            </div>
             <div>
               <div className="custom-project-title">co‑founder — <a href="https://www.linkedin.com/company/tablingos/about/" target="_blank" rel="noreferrer" className="hover-glow">tablingos</a></div>
               <div className="text-neutral-600 custom-small">data automation backed by Microsoft</div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Logo src="/wwf-logo.png" alt="WWF" size={36} />
+          <div className="flex items-start gap-3">
+            <div className="flex items-center pt-0.5">
+              <Logo src="/wwf-logo.png" alt="WWF" size={36} />
+            </div>
             <div>
               <div className="custom-project-title">data scientist intern — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="hover-glow">wwf</a></div>
               <div className="text-neutral-600 custom-small">using data science to do good</div>
