@@ -239,7 +239,7 @@ const FaceGestureTracker = () => {
             setIsTracking(true);
             localStorage.setItem('faceGesturesEnabled', 'true');
           }}
-          className="px-4 py-2 rounded text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors border border-gray-200"
+          className="px-4 py-2 rounded text-sm font-medium bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-200 dark:border-neutral-700"
         >
           enable face gestures
         </button>
@@ -250,27 +250,27 @@ const FaceGestureTracker = () => {
               setIsTracking(false);
               localStorage.setItem('faceGesturesEnabled', 'false');
             }}
-            className="px-4 py-2 rounded text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors border border-gray-200"
+            className="px-4 py-2 rounded text-sm font-medium bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-200 dark:border-neutral-700"
           >
             disable face gestures
           </button>
           
-          <div className="bg-white rounded-lg border border-gray-200 shadow-lg p-3 w-64">
+          <div className="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 shadow-lg p-3 w-64">
             <div className="flex flex-col items-center gap-2">
-              <div className="flex items-center gap-1.5 text-xs text-gray-700">
-                <div className={`w-1.5 h-1.5 rounded-full ${faceDetected ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+              <div className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-200">
+                <div className={`w-1.5 h-1.5 rounded-full ${faceDetected ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
                 <span>{faceDetected ? 'face detected' : 'no face detected'}</span>
               </div>
               
               <video
                 ref={videoRef}
-                className="w-20 h-20 object-cover rounded border border-gray-300 mx-auto"
+                className="w-20 h-20 object-cover rounded border border-gray-300 dark:border-gray-600 mx-auto"
                 autoPlay
                 muted
                 playsInline
               />
               
-              <div className="text-center text-xs text-gray-700">
+              <div className="text-center text-xs text-gray-700 dark:text-gray-200">
                 <div className="font-medium mb-1">MediaPipe Face Mesh</div>
                 <div className="space-y-0.5 text-xs">
                   <div>tongue out = scroll down</div>
@@ -284,7 +284,7 @@ const FaceGestureTracker = () => {
       )}
       
       {error && (
-        <div className="text-red-500 text-xs text-center mt-2">
+        <div className="text-red-500 dark:text-red-400 text-xs text-center mt-2">
           {error}
         </div>
       )}

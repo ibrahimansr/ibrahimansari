@@ -1,6 +1,6 @@
 {
-  "/about/page": "app/about/page.js",
-  "/gallery/page": "app/gallery/page.js",
   "/page": "app/page.js",
-  "/progress/page": "app/progress/page.js"
+  "/progress/page": "app/progress/page.js",
+  "/gallery/page": "app/gallery/page.js",
+  "/about/page": "app/about/page.js"
 }

@@ -52,7 +52,7 @@ export default function Gallery() {
                       height={400}
                       className="w-full h-auto object-contain"
                     />
-                    <div className="text-neutral-600 custom-small">got CC UNESCO Award for Scholarly Communication</div>
+                    <div className="text-neutral-600 dark:text-neutral-400 custom-small">got CC UNESCO Award for Scholarly Communication</div>
                   </div>
                   <div className="space-y-2">
                     <Image
@@ -62,7 +62,7 @@ export default function Gallery() {
                       height={400}
                       className="w-full h-auto object-contain"
                     />
-                    <div className="text-neutral-600 custom-small">winning project at HammerHacks with good friends</div>
+                    <div className="text-neutral-600 dark:text-neutral-400 custom-small">winning project at HammerHacks with good friends</div>
                   </div>
                   <div className="space-y-2">
                     <Image
@@ -72,7 +72,7 @@ export default function Gallery() {
                       height={400}
                       className="w-full h-auto object-contain"
                     />
-                    <div className="text-neutral-600 custom-small">presented findings about Ontario education budgeting to some big names</div>
+                    <div className="text-neutral-600 dark:text-neutral-400 custom-small">presented findings about Ontario education budgeting to some big names</div>
                   </div>
                 </div>
               </div>
@@ -83,7 +83,7 @@ export default function Gallery() {
                 <div className="custom-section-title mb-4">travelling</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Add travelling photos here when available */}
-                  <div className="text-neutral-500 custom-small">coming soon</div>
+                  <div className="text-neutral-500 dark:text-neutral-400 custom-small">coming soon</div>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ export default function Gallery() {
                 <div className="custom-section-title mb-4">random</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Add random photos here when available */}
-                  <div className="text-neutral-500 custom-small">coming soon</div>
+                  <div className="text-neutral-500 dark:text-neutral-400 custom-small">coming soon</div>
                 </div>
               </div>
             </div>
@@ -106,16 +106,16 @@ export default function Gallery() {
                 <div className="custom-contact">contact</div>
                 <div className="mt-4 flex items-center gap-6">
                   <a className="hover-scale" href="mailto:ibrahim.ansari4161@gmail.com" title="Email">
-                    <Mail size={20} className="text-neutral-600" />
+                    <Mail size={20} className="text-neutral-600 dark:text-neutral-400" />
                   </a>
                   <a className="hover-slide" href="https://github.com/ibrahim-ansari-code" target="_blank" rel="noreferrer" title="GitHub">
-                    <Github size={20} className="text-gray-800" />
+                    <Github size={20} className="text-gray-800 dark:text-gray-200" />
                   </a>
                   <a className="hover-glow" href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn">
                     <Logo src="/linkedin.webp" alt="LinkedIn" size={20} />
                   </a>
                   <a className="hover-scale" href="https://x.com/IbrahimAns20615" target="_blank" rel="noreferrer" title="X (Twitter)">
-                    <Twitter size={20} className="text-black" />
+                    <Twitter size={20} className="text-black dark:text-white" />
                   </a>
                   <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">
                     <Instagram size={20} className="text-pink-600" />

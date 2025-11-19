@@ -44,10 +44,10 @@ export default function Progress() {
           <div className="custom-section-title">weekly updates</div>
           
           <div className="space-y-3 pb-4 last:pb-0">
-            <div className="text-neutral-500 custom-small">
+            <div className="text-neutral-500 dark:text-neutral-400 custom-small">
               November 2nd - 8th, 2024
             </div>
-            <div className="text-neutral-800 space-y-2">
+            <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Working on <a href="https://www.letthemhit.ca/" target="_blank" rel="noreferrer" className="hover-glow">letthemhit.ca</a> (got botted multiple times). Added a couple features to brikli. Continued learning ML, focusing on the math side of things.</p>
             </div>
           </div>
@@ -61,16 +61,16 @@ export default function Progress() {
             <div className="custom-contact">contact</div>
             <div className="mt-4 flex items-center gap-6">
               <a className="hover-scale" href="mailto:ibrahim.ansari4161@gmail.com" title="Email">
-                <Mail size={20} className="text-neutral-600" />
+                <Mail size={20} className="text-neutral-600 dark:text-neutral-400" />
               </a>
               <a className="hover-slide" href="https://github.com/ibrahim-ansari-code" target="_blank" rel="noreferrer" title="GitHub">
-                <Github size={20} className="text-gray-800" />
+                <Github size={20} className="text-gray-800 dark:text-gray-200" />
               </a>
               <a className="hover-glow" href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn">
                 <Logo src="/linkedin.webp" alt="LinkedIn" size={20} />
               </a>
               <a className="hover-scale" href="https://x.com/IbrahimAns20615" target="_blank" rel="noreferrer" title="X (Twitter)">
-                <Twitter size={20} className="text-black" />
+                <Twitter size={20} className="text-black dark:text-white" />
               </a>
               <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">
                 <Instagram size={20} className="text-pink-600" />
