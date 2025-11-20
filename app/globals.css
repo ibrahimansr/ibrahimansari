@@ -79,10 +79,28 @@
   .bg-grid {
     position: relative;
     background: #ffffff;
+    background-image: 
+      radial-gradient(circle at 15% 25%, rgba(0, 0, 0, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 35%, rgba(0, 0, 0, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 45% 75%, rgba(0, 0, 0, 0.10) 0%, transparent 50%),
+      radial-gradient(circle at 75% 85%, rgba(0, 0, 0, 0.10) 0%, transparent 50%),
+      linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.06) 30%, transparent 70%),
+      linear-gradient(45deg, transparent 0%, rgba(0, 0, 0, 0.05) 30%, transparent 70%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%, 200% 200%;
+    background-position: 0 0, 100% 0, 0 100%, 100% 100%, 0 0, 100% 0;
   }
   
   .dark .bg-grid {
     background: hsl(var(--background));
+    background-image: 
+      radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 35%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 45% 75%, rgba(255, 255, 255, 0.10) 0%, transparent 50%),
+      radial-gradient(circle at 75% 85%, rgba(255, 255, 255, 0.10) 0%, transparent 50%),
+      linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.06) 30%, transparent 70%),
+      linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.05) 30%, transparent 70%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%, 200% 200%;
+    background-position: 0 0, 100% 0, 0 100%, 100% 100%, 0 0, 100% 0;
   }
 
   /* Optional: Photo background overlay (uncomment to use instead of pattern) */

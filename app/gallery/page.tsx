@@ -22,7 +22,7 @@ function Logo({ src, alt, size = 18 }: { src: string; alt: string; size?: number
 export default function Gallery() {
   return (
     <main className="relative">
-      <div className="relative z-10 mx-auto max-w-screen-md px-6 sm:px-4">
+      <div className="relative z-10 mx-auto max-w-screen-md pl-4 pr-6 sm:pl-2 sm:pr-4">
         <div className="pt-16 sm:pt-24" />
 
         <div className="flex gap-8">
