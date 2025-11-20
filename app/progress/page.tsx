@@ -43,6 +43,15 @@ export default function Progress() {
         <div className="custom-body space-y-6 section-border">
           <div className="custom-section-title">weekly updates</div>
           
+          <div className="space-y-3 pb-4">
+            <div className="text-neutral-500 dark:text-neutral-400 custom-small">
+              November 9th - 15th, 2024
+            </div>
+            <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
+              <p>Went to first Socratica meeting, closed a couple PRs for Brikli, continued path to learning ML, need to catch up on uni 😛.</p>
+            </div>
+          </div>
+          
           <div className="space-y-3 pb-4 last:pb-0">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
               November 2nd - 8th, 2024
