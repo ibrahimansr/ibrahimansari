@@ -54,7 +54,7 @@ export default function Progress() {
           
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
-              November 16th - 22th, 2025
+              November 16th - 22nd, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Exams coming up, learning more ML, grinding for brikli, building something new.</p>
