@@ -42,6 +42,15 @@ export default function Progress() {
 
         <div className="custom-body space-y-6 section-border">
           <div className="custom-section-title">weekly updates</div>
+
+          <div className="space-y-3 pb-4">
+            <div className="text-neutral-500 dark:text-neutral-400 custom-small">
+              November 23rd - 30th, 2024
+            </div>
+            <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
+              <p>Exam stress, but worked a but on Brikli, starting reading papers, implemented Andrej Karpathy's LLM council as an IDE: https://github.com/ibrahim-ansari-code/LLM-Council-IDE.</p>
+            </div>
+          </div>
           
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
