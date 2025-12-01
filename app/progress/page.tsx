@@ -48,7 +48,7 @@ export default function Progress() {
               November 23rd - 30th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
-              <p>Exam stress, but worked a but on Brikli, starting reading papers, implemented Andrej Karpathy's LLM council as an IDE: https://github.com/ibrahim-ansari-code/LLM-Council-IDE.</p>
+              <p>Exam stress, but worked a but on Brikli, starting reading papers, implemented Andrej Karpathy's LLM council as an <a href="https://github.com/ibrahim-ansari-code/LLM-Council-IDE" target="_blank" rel="noreferrer" className="hover-glow">IDE</a>.</p>
             </div>
           </div>
           
