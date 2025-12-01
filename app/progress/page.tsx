@@ -45,7 +45,7 @@ export default function Progress() {
 
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
-              November 23rd - 30th, 2024
+              November 23rd - 30th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Exam stress, but worked a but on Brikli, starting reading papers, implemented Andrej Karpathy's LLM council as an IDE: https://github.com/ibrahim-ansari-code/LLM-Council-IDE.</p>
@@ -54,7 +54,7 @@ export default function Progress() {
           
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
-              November 16th - 22th, 2024
+              November 16th - 22th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Exams coming up, learning more ML, grinding for brikli, building something new.</p>
@@ -64,7 +64,7 @@ export default function Progress() {
 
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
-              November 9th - 15th, 2024
+              November 9th - 15th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Went to first Socratica meeting, closed a couple PRs for Brikli, continued path to learning ML, need to catch up on uni 😛.</p>
@@ -73,7 +73,7 @@ export default function Progress() {
           
           <div className="space-y-3 pb-4 last:pb-0">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
-              November 2nd - 8th, 2024
+              November 2nd - 8th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
               <p>Working on <a href="https://www.letthemhit.ca/" target="_blank" rel="noreferrer" className="hover-glow">letthemhit.ca</a> (got botted multiple times). Added a couple features to brikli. Continued learning ML, focusing on the math side of things.</p>
