@@ -45,6 +45,15 @@ export default function Progress() {
 
           <div className="space-y-3 pb-4">
             <div className="text-neutral-500 dark:text-neutral-400 custom-small">
+              November 31st - December 7th, 2025
+            </div>
+            <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
+              <p>Exams
+            </div>
+          </div>
+
+          <div className="space-y-3 pb-4">
+            <div className="text-neutral-500 dark:text-neutral-400 custom-small">
               November 23rd - 30th, 2025
             </div>
             <div className="text-neutral-800 dark:text-neutral-200 space-y-2">
