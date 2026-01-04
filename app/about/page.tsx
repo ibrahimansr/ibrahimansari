@@ -33,9 +33,7 @@ export default function About() {
         <div className="flex gap-8">
           <div className="flex flex-col gap-4 min-w-[120px]">
             <Link href="/" className="font-extralight hover-scale text-left">home</Link>
-            <Link href="/progress" className="font-extralight hover-scale text-left">progress</Link>
             <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
-            <Link href="/gallery" className="font-extralight hover-scale text-left">gallery</Link>
           </div>
 
           <div className="flex-1">
@@ -128,6 +126,44 @@ export default function About() {
           </div>
         </div>
 
+        <div className="custom-divider-thick" />
+
+        <div className="custom-body space-y-4 section-border">
+          <div className="custom-section-title">pictures</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Image
+                src="/Activity from Ibrahim Khawar.jpeg"
+                alt="UNESCO Award"
+                width={600}
+                height={400}
+                className="w-full h-auto object-contain"
+              />
+              <div className="text-neutral-600 dark:text-neutral-400 custom-small">got CC UNESCO Award for Scholarly Communication</div>
+            </div>
+            <div className="space-y-2">
+              <Image
+                src="/37.jpg"
+                alt="HammerHacks"
+                width={600}
+                height={400}
+                className="w-full h-auto object-contain"
+              />
+              <div className="text-neutral-600 dark:text-neutral-400 custom-small">winning project at HammerHacks with good friends</div>
+            </div>
+            <div className="space-y-2">
+              <Image
+                src="/IMG_7138.jpeg"
+                alt="Education Presentation"
+                width={600}
+                height={400}
+                className="w-full h-auto object-contain"
+              />
+              <div className="text-neutral-600 dark:text-neutral-400 custom-small">presented findings about Ontario education budgeting to some big names</div>
+            </div>
+          </div>
+        </div>
+
         <div className="custom-divider" />
 
         <div className="custom-body section-border">
@@ -144,7 +180,7 @@ export default function About() {
               <a className="hover-glow" href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn">
                 <Logo src="/linkedin.webp" alt="LinkedIn" size={20} />
               </a>
-              <a className="hover-scale" href="https://x.com/IbrahimAns20615" target="_blank" rel="noreferrer" title="X (Twitter)">
+              <a className="hover-scale" href="https://x.com/ibrahimansr" target="_blank" rel="noreferrer" title="X (Twitter)">
                 <Twitter size={20} className="text-black dark:text-white" />
               </a>
               <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">

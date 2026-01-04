@@ -34,23 +34,23 @@ export function ThemeToggle() {
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="fixed top-4 right-[200px] z-50 py-2 rounded text-sm font-medium bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-200 dark:border-neutral-700 flex items-center justify-center"
-      style={{ 
-        width: 'calc(0.5rem + 1.25rem + 0.5rem + 2px)',
-        height: 'calc(0.5rem + 1.25rem + 0.5rem + 2px)',
-        paddingLeft: '0.5rem',
-        paddingRight: '0.5rem'
-      }}
-      aria-label="Toggle dark mode"
-    >
-      {isDark ? (
-        <Sun size={16} className="text-gray-700 dark:text-gray-200" />
-      ) : (
-        <Moon size={16} className="text-gray-700 dark:text-gray-200" />
-      )}
-    </button>
+    <div className="fixed bottom-4 left-[88px] z-50 w-16">
+      <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm rounded-lg border border-black/20 dark:border-white/20 shadow-lg">
+        <div className="p-3">
+          <button
+            onClick={toggleTheme}
+            className="w-full h-10 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-black/80 dark:hover:bg-white/80 transition-colors flex items-center justify-center"
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? (
+              <Sun size={16} />
+            ) : (
+              <Moon size={16} />
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

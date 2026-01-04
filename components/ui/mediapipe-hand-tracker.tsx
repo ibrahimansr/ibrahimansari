@@ -34,21 +34,21 @@ const FaceGestureTracker = () => {
   const NAVIGATION_COOLDOWN = 3000;
 
   const executeGesture = useCallback((gesture: string) => {
+    console.log('🎯 EXECUTING FACE GESTURE:', gesture);
     if (gesture === 'tongue_out') {
+      console.log('👅 Tongue out - scrolling down');
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     } else if (gesture === 'smile') {
+      console.log('😊 Smile - scrolling up');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (gesture === 'head_shake') {
+      console.log('👈👉 Head shake - navigating to other page');
       lastNavigationTime.current = Date.now();
       setNavigationCooldown(true);
       setTimeout(() => setNavigationCooldown(false), NAVIGATION_COOLDOWN);
       const currentPath = window.location.pathname;
       if (currentPath === '/') {
-        router.push('/progress');
-      } else if (currentPath === '/progress') {
         router.push('/about');
-      } else if (currentPath === '/about') {
-        router.push('/gallery');
       } else {
         router.push('/');
       }
@@ -60,13 +60,7 @@ const FaceGestureTracker = () => {
       const { FaceMesh } = await import('@mediapipe/face_mesh');
       
       const faceMesh = new FaceMesh({
-        locateFile: (file) => {
-          // Try unpkg CDN first, fallback to jsdelivr
-          if (file.includes('_wasm')) {
-            return `https://unpkg.com/@mediapipe/face_mesh/${file}`;
-          }
-          return `https://unpkg.com/@mediapipe/face_mesh/${file}`;
-        }
+        locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
       });
 
       faceMesh.setOptions({
@@ -89,9 +83,8 @@ const FaceGestureTracker = () => {
       faceMeshRef.current = faceMesh;
       return faceMesh;
     } catch (err) {
-      console.error('MediaPipe initialization error:', err);
-      setError('Failed to load face detection. Please check your connection.');
-      setIsTracking(false);
+      console.error('❌ MediaPipe initialization error:', err);
+      setError('Failed to initialize face detection');
       return null;
     }
   }, []);
@@ -128,18 +121,18 @@ const FaceGestureTracker = () => {
     const deltaX = headCenterX - screenCenter.x;
     const deltaY = headCenterY - screenCenter.y;
 
+    // Debug logging for head movement
+    if (Math.abs(deltaX) > 0.02) {
+      console.log(`👤 HEAD POSITION: deltaX=${deltaX.toFixed(3)}, headCenter=${headCenterX.toFixed(3)}, bbox=(${minX.toFixed(2)}-${maxX.toFixed(2)})`);
+    }
+
     let gesture = 'none';
 
     const isTongueOut = mouthAspectRatio > 0.3;
-    const isHeadMoving = Math.abs(deltaX) > 0.05;
-    const headDirection = deltaX < 0 ? 'left' : 'right';
 
-    let isHeadShake = false;
-    if (Math.abs(deltaX) > 0.1 && Math.abs(deltaY) < 0.25) {
-      isHeadShake = true;
-    }
-
-    if (isHeadShake) {
+    // Head shake detection - check for significant head movement
+    if (Math.abs(deltaX) > 0.08) {
+      console.log(`🎯 HEAD SHAKE DETECTED: deltaX=${deltaX.toFixed(3)}`);
       gesture = 'head_shake';
     } else if (isTongueOut) {
       gesture = 'tongue_out';
@@ -151,12 +144,14 @@ const FaceGestureTracker = () => {
       if (gesture === 'head_shake') {
         const now = Date.now();
         if (now - lastHeadShakeTime.current > 2000) {
+          console.log(`🎭 FACE GESTURE DETECTED: ${gesture} (mouth ratio: ${mouthAspectRatio.toFixed(3)}, deltaX: ${deltaX.toFixed(3)})`);
           setGesture(gesture);
           executeGesture(gesture);
           lastGestureTime.current = now;
           lastHeadShakeTime.current = now;
         }
       } else if (Date.now() - lastGestureTime.current > COOLDOWN_TIME) {
+        console.log(`🎭 FACE GESTURE DETECTED: ${gesture} (mouth ratio: ${mouthAspectRatio.toFixed(3)}, deltaX: ${deltaX.toFixed(3)})`);
         setGesture(gesture);
         executeGesture(gesture);
         lastGestureTime.current = Date.now();
@@ -166,6 +161,7 @@ const FaceGestureTracker = () => {
 
   const startCamera = useCallback(async () => {
     try {
+      console.log('🎥 Starting camera...');
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
           width: 640, 
@@ -179,10 +175,12 @@ const FaceGestureTracker = () => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
+        console.log('✅ Camera access granted');
         
         await new Promise((resolve) => {
           if (videoRef.current) {
             videoRef.current.onloadedmetadata = () => {
+              console.log('📹 Video metadata loaded');
               resolve(true);
             };
           }
@@ -198,7 +196,7 @@ const FaceGestureTracker = () => {
               try {
                 await faceMesh.send({ image: videoRef.current });
               } catch (err) {
-                // ignore
+                console.log('MediaPipe frame processing error:', err);
               }
             }
           },
@@ -208,6 +206,7 @@ const FaceGestureTracker = () => {
         camera.start();
       }
     } catch (err) {
+      console.error('❌ Camera error:', err);
       setError('Camera access denied');
     }
   }, [initializeMediaPipe]);
@@ -225,10 +224,28 @@ const FaceGestureTracker = () => {
           faceMeshRef.current.close();
           isMediaPipeClosedRef.current = true;
         } catch (err) {
+          console.log('MediaPipe already closed');
           isMediaPipeClosedRef.current = true;
         }
+        faceMeshRef.current = null;
       }
     }
+
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      if (faceMeshRef.current && !isMediaPipeClosedRef.current) {
+        try {
+          faceMeshRef.current.close();
+          isMediaPipeClosedRef.current = true;
+        } catch (err) {
+          console.log('MediaPipe already closed');
+          isMediaPipeClosedRef.current = true;
+        }
+        faceMeshRef.current = null;
+      }
+    };
   }, [isTracking, startCamera]);
 
   return (

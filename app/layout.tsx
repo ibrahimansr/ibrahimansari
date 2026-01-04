@@ -4,6 +4,7 @@ import './globals.css'
 import FaceGestureTracker from '@/components/ui/mediapipe-hand-tracker'
 import MusicPlayer from '@/components/ui/music-player'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { WebringEmbed } from '@/components/ui/webring-embed'
 import { MusicProvider } from '@/contexts/MusicContext'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <ThemeToggle />
           <FaceGestureTracker />
           <MusicPlayer />
+          <WebringEmbed />
           <audio id="global-audio" style={{ display: 'none' }} />
           {children}
         </MusicProvider>

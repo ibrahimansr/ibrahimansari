@@ -45,9 +45,7 @@ export default function Home() {
         <div className="flex gap-8">
           <div className="flex flex-col gap-4 min-w-[120px]">
             <Link href="/" className="font-extralight hover-scale text-left">home</Link>
-            <Link href="/progress" className="font-extralight hover-scale text-left">progress</Link>
             <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
-            <Link href="/gallery" className="font-extralight hover-scale text-left">gallery</Link>
           </div>
 
           <div className="flex-1">
@@ -103,18 +101,18 @@ export default function Home() {
           id="projects-section"
           className="custom-body space-y-4 animate-[fadeIn_700ms_ease] section-border"
         >
-          <div className="custom-section-title">projects</div>
+          <div className="custom-section-title">stuff from this month</div>
           <div>
-            <div className="custom-project-title"><a className="hover-scale" href="https://github.com/ibrahim-ansari-code/Islam-or-JDM" target="_blank" rel="noreferrer">ufc predictor</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">because i lost too much money betting</div>
+            <div className="custom-project-title"><a className="hover-scale" href="https://www.letthemhit.ca/" target="_blank" rel="noreferrer">let them hit</a></div>
+            <div className="text-neutral-600 dark:text-neutral-400 custom-small">10k users in a week</div>
           </div>
           <div>
-            <div className="custom-project-title"><a className="hover-slide" href="https://app.handsforu.com" target="_blank" rel="noreferrer">hands</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">RAG + cooking app</div>
+            <div className="custom-project-title"><a className="hover-slide" href="https://github.com/ibrahim-ansari-code/LLM-Council-IDE" target="_blank" rel="noreferrer">LLM Council IDE</a></div>
+            <div className="text-neutral-600 dark:text-neutral-400 custom-small">quick project, 20 stars on github</div>
           </div>
           <div>
-            <div className="custom-project-title"><a className="hover-glow" href="https://github.com/ibrahim-ansari-code/no-rot" target="_blank" rel="noreferrer">norot</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">grammarly for brainrot</div>
+            <div className="custom-project-title"><a className="hover-glow" href="https://ummahhacks.com/" target="_blank" rel="noreferrer">Ummah Hacks</a></div>
+            <div className="text-neutral-600 dark:text-neutral-400 custom-small">backed by YC startups and Shopify</div>
           </div>
         </div>
 
@@ -154,7 +152,7 @@ export default function Home() {
               <a className="hover-glow" href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn">
                 <Logo src="/linkedin.webp" alt="LinkedIn" size={20} />
               </a>
-              <a className="hover-scale" href="https://x.com/IbrahimAns20615" target="_blank" rel="noreferrer" title="X (Twitter)">
+              <a className="hover-scale" href="https://x.com/ibrahimansr" target="_blank" rel="noreferrer" title="X (Twitter)">
                 <Twitter size={20} className="text-black dark:text-white" />
               </a>
               <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">

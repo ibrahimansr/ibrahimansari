@@ -277,5 +277,15 @@
   transition: all 0.3s ease !important;
 }
 
+/* Webring embed styling - scale the entire wrapper container */
+#webring-wrapper {
+  transform: scale(0.4) !important;
+  transform-origin: bottom right !important;
+  display: inline-block !important;
+}
+
+#webring-wrapper * {
+  transform: none !important;
+}
 
 }
