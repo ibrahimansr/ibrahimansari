@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail, Github, Linkedin, Twitter, Instagram } from "lucide-react";
 import { PlayButton } from "@/components/ui/play-button";
+import Webring from "@/components/ui/webring";
 
 // const test = () => { return "hello"; }
 // const unused = "this is not used";
@@ -186,6 +187,9 @@ export default function About() {
               <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">
                 <Instagram size={20} className="text-pink-600" />
               </a>
+              <div className="ml-auto">
+                <Webring />
+              </div>
             </div>
           </footer>
         </div>
