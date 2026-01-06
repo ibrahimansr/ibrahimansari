@@ -3,7 +3,6 @@ import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import FaceGestureTracker from '@/components/ui/mediapipe-hand-tracker'
 import MusicPlayer from '@/components/ui/music-player'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { MusicProvider } from '@/contexts/MusicContext'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -28,7 +27,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${spaceGrotesk.variable} font-sans antialiased`}>
         <MusicProvider>
-          <ThemeToggle />
           <FaceGestureTracker />
           <MusicPlayer />
           <audio id="global-audio" style={{ display: 'none' }} />

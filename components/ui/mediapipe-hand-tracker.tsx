@@ -256,7 +256,8 @@ const FaceGestureTracker = () => {
             setIsTracking(true);
             localStorage.setItem('faceGesturesEnabled', 'true');
           }}
-          className="px-4 py-2 rounded text-sm font-medium bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-200 dark:border-neutral-700"
+          className="px-4 py-2 rounded text-sm font-medium bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors border border-white/20 shadow-lg font-vt323"
+          style={{ fontFamily: 'VT323, monospace' }}
         >
           enable face gestures
         </button>
@@ -267,32 +268,31 @@ const FaceGestureTracker = () => {
               setIsTracking(false);
               localStorage.setItem('faceGesturesEnabled', 'false');
             }}
-            className="px-4 py-2 rounded text-sm font-medium bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors border border-gray-200 dark:border-neutral-700"
+            className="px-4 py-2 rounded text-sm font-medium bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors border border-white/20 shadow-lg font-vt323"
+            style={{ fontFamily: 'VT323, monospace' }}
           >
             disable face gestures
           </button>
           
-          <div className="bg-white dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 shadow-lg p-3 w-64">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-lg p-3 w-64">
             <div className="flex flex-col items-center gap-2">
-              <div className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-200">
-                <div className={`w-1.5 h-1.5 rounded-full ${faceDetected ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+              <div className="flex items-center gap-1.5 text-xs text-white font-vt323" style={{ fontFamily: 'VT323, monospace' }}>
+                <div className={`w-1.5 h-1.5 rounded-full ${faceDetected ? 'bg-green-500' : 'bg-gray-400'}`}></div>
                 <span>{faceDetected ? 'face detected' : 'no face detected'}</span>
               </div>
               
               <video
                 ref={videoRef}
-                className="w-20 h-20 object-cover rounded border border-gray-300 dark:border-gray-600 mx-auto"
+                className="w-20 h-20 object-cover rounded border border-white/20 mx-auto"
                 autoPlay
                 muted
                 playsInline
               />
               
-              <div className="text-center text-xs text-gray-700 dark:text-gray-200">
-                <div className="font-medium mb-1">MediaPipe Face Mesh</div>
+              <div className="text-center text-xs text-white font-vt323" style={{ fontFamily: 'VT323, monospace' }}>
                 <div className="space-y-0.5 text-xs">
                   <div>tongue out = scroll down</div>
                   <div>smile = scroll up</div>
-                  <div>head shake = switch page</div>
                 </div>
               </div>
             </div>

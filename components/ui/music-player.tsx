@@ -20,18 +20,18 @@ const MusicPlayer = () => {
         {isExpanded ? (
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-black dark:text-white font-medium">Now Playing</h3>
+              <h3 className="text-white font-medium font-vt323" style={{ fontFamily: 'VT323, monospace' }}>Now Playing</h3>
               <button
                 onClick={() => setIsExpanded(false)}
-                className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400"
+                className="text-white hover:text-gray-300"
               >
                 ×
               </button>
             </div>
             
             <div className="mb-4">
-              <div className="text-black dark:text-white font-medium text-sm">{currentSong.title}</div>
-              <div className="text-black dark:text-white text-xs opacity-70">{currentSong.artist}</div>
+              <div className="text-white font-medium text-sm font-vt323" style={{ fontFamily: 'VT323, monospace' }}>{currentSong.title}</div>
+              <div className="text-white text-xs opacity-70 font-vt323" style={{ fontFamily: 'VT323, monospace' }}>{currentSong.artist}</div>
             </div>
             
             <div className="flex items-center gap-2">

@@ -100,7 +100,17 @@ function MainHeader() {
           <tr>
             <td style={{ padding: 0, lineHeight: '1.2', whiteSpace: 'nowrap' }}>║</td>
             <td style={{ padding: 0, lineHeight: '1.2', whiteSpace: 'nowrap', width: `${maxWidth}ch`, textAlign: 'center' }}>
-              {subtitle}
+              management engineering @ uwaterloo
+              <span style={{ display: 'inline-block', animation: 'float 3s ease-in-out infinite', marginLeft: '0.3em' }}>
+                <Image
+                  src="/uwaterloo.png"
+                  alt="University of Waterloo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                  style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                />
+              </span>
             </td>
             <td style={{ padding: 0, lineHeight: '1.2', whiteSpace: 'nowrap' }}>║</td>
           </tr>
@@ -420,25 +430,52 @@ export default function Home() {
                   </div>
                   
                   <div className="space-y-4 w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 6}ch` }}>
-                    <div className="py-2">
-                      <div className="font-vt323 text-xl text-white mb-1">
-                        SOFTWARE ENGINEER — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">BRIKLI</a>
+                    <div className="py-2 flex items-center gap-2">
+                      <Image
+                        src="/brikli.png"
+                        alt="Brikli"
+                        width={32}
+                        height={32}
+                        className="object-contain flex-shrink-0"
+                      />
+                      <div>
+                        <div className="font-vt323 text-xl text-white mb-1">
+                          SOFTWARE ENGINEER — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">BRIKLI</a>
+                        </div>
+                        <div className="font-vt323 text-base text-white/60">making housing easier</div>
                       </div>
-                      <div className="font-vt323 text-base text-white/60">making housing easier</div>
             </div>
 
-                    <div className="py-2">
-                      <div className="font-vt323 text-xl text-white mb-1">
-                        CO-FOUNDER — <a href="https://www.linkedin.com/company/tablingos/about/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">TABLINGOS</a>
+                    <div className="py-2 flex items-center gap-2">
+                      <Image
+                        src="/tablingos.png"
+                        alt="Tablingos"
+                        width={32}
+                        height={32}
+                        className="object-contain flex-shrink-0"
+                      />
+                      <div>
+                        <div className="font-vt323 text-xl text-white mb-1">
+                          CO-FOUNDER — <a href="https://www.linkedin.com/company/tablingos/about/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">TABLINGOS</a>
+                        </div>
+                        <div className="font-vt323 text-base text-white/60">data automation backed by Microsoft</div>
                       </div>
-                      <div className="font-vt323 text-base text-white/60">data automation backed by Microsoft</div>
                     </div>
                     
-                    <div className="py-2">
-                      <div className="font-vt323 text-xl text-white mb-1">
-                        DATA SCIENTIST INTERN — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">WWF</a>
-            </div>
-                      <div className="font-vt323 text-base text-white/60">using data science to do good</div>
+                    <div className="py-2 flex items-center gap-2">
+                      <Image
+                        src="/wwf.png"
+                        alt="WWF"
+                        width={32}
+                        height={32}
+                        className="object-contain flex-shrink-0"
+                      />
+                      <div>
+                        <div className="font-vt323 text-xl text-white mb-1 whitespace-nowrap">
+                          DATA SCIENTIST INTERN — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">WWF</a>
+                        </div>
+                        <div className="font-vt323 text-base text-white/60">using data science to do good</div>
+                      </div>
             </div>
           </div>
                 </section>
@@ -652,7 +689,7 @@ export default function Home() {
                    <AsciiBox title="PICTURES" />
                  </div>
                  
-                 <div className="w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 20}ch` }}>
+                 <div className="w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 18}ch` }}>
                    <div className="overflow-x-auto border-2 border-white/20 p-4">
                      <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
                        <Image
