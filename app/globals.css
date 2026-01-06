@@ -1,3 +1,6 @@
+@import '@fontsource/vt323';
+@import '@fontsource/share-tech-mono';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -69,7 +72,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground tracking-[0.005em] bg-grid;
+    @apply bg-black text-white tracking-[0.005em];
     font-family: var(--font-space-grotesk), system-ui, sans-serif;
   }
 }
@@ -261,6 +264,7 @@
     border-radius: 50%;
     animation: pulse 1s infinite;
   }
+}
 
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
@@ -277,4 +281,153 @@
   transition: all 0.3s ease !important;
 }
 
+@layer utilities {
+/* ASCII Art Styles */
+.ascii-body {
+  font-family: 'VT323', monospace;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+}
+
+.ascii-section-title {
+  font-family: 'VT323', monospace;
+  font-weight: 400;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.ascii-project-title {
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.ascii-small {
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.ascii-contact {
+  font-family: 'VT323', monospace;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.2rem;
+}
+
+.ascii-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 28px 0;
+  position: relative;
+}
+
+.ascii-divider::before {
+  content: '═══════════════════════════════════════════════════════════════════════════════';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  font-family: 'VT323', monospace;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+.dark .ascii-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .ascii-divider::before {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.ascii-divider-thick {
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  margin: 24px 0;
+  position: relative;
+}
+
+.ascii-divider-thick::before {
+  content: '═══════════════════════════════════════════════════════════════════════════════';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  font-family: 'VT323', monospace;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+.dark .ascii-divider-thick {
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .ascii-divider-thick::before {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.ascii-box {
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.ascii-box::before {
+  content: '│';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  font-family: 'VT323', monospace;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.dark .ascii-box {
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .ascii-box::before {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.ascii-section-border {
+  margin: 16px 0;
+  padding: 1rem 0;
+}
+
+.font-vt323 {
+  font-family: 'VT323', monospace;
+}
+
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(200px, 200px) rotate(45deg);
+    opacity: 0;
+  }
 }

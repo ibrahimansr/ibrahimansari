@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/fira-code": "^5.2.7",
+    "@fontsource/share-tech-mono": "^5.2.7",
+    "@fontsource/vt323": "^5.2.7",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@vercel/analytics": "^1.5.0",
