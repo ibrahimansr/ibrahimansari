@@ -71,8 +71,13 @@ function MainHeader() {
         fontSize: '2.25rem',
         lineHeight: '1.2',
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        textShadow: '0 0 15px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 0.9), 3px 3px 6px rgba(0, 0, 0, 1)',
+        filter: 'drop-shadow(0 0 10px rgba(0, 0, 0, 0.95))',
+        position: 'relative',
+        zIndex: 10
       }}
+      className="backdrop-blur-[0.5px] bg-black/10 px-6 py-4"
     >
       <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: 'auto', margin: '0 auto' }}>
         <tbody>
@@ -243,216 +248,201 @@ function CosmosBackground() {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const [animationProgress, setAnimationProgress] = useState(0);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerDimensions, setHeaderDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Butterfly shape
-  const butterflyShape = useMemo(() => {
-    const points: Array<{ x: number; y: number; char: string }> = [];
-    const centerX = 40;
-    const centerY = 25;
-    
-    // Left upper wing
-    for (let i = 0; i < 8; i++) {
-      const angle = (Math.PI / 2) + (i / 7) * (Math.PI / 2.5);
-      const radius = 12 + (i / 7) * 8;
-      points.push({
-        x: centerX - Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    for (let i = 0; i < 6; i++) {
-      const angle = (Math.PI / 2.2) + (i / 5) * (Math.PI / 3);
-      const radius = 8 + (i / 5) * 6;
-      points.push({
-        x: centerX - Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    // Left lower wing
-    for (let i = 0; i < 8; i++) {
-      const angle = (Math.PI / 2) - (i / 7) * (Math.PI / 2.5);
-      const radius = 12 + (i / 7) * 8;
-      points.push({
-        x: centerX - Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    // Right upper wing
-    for (let i = 0; i < 8; i++) {
-      const angle = (Math.PI / 2) - (i / 7) * (Math.PI / 2.5);
-      const radius = 12 + (i / 7) * 8;
-      points.push({
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    for (let i = 0; i < 6; i++) {
-      const angle = (Math.PI / 2.2) - (i / 5) * (Math.PI / 3);
-      const radius = 8 + (i / 5) * 6;
-      points.push({
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    // Right lower wing
-    for (let i = 0; i < 8; i++) {
-      const angle = (Math.PI / 2) + (i / 7) * (Math.PI / 2.5);
-      const radius = 12 + (i / 7) * 8;
-      points.push({
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY - Math.sin(angle) * radius,
-        char: '*'
-      });
-    }
-    
-    // Body
-    for (let i = 0; i < 10; i++) {
-      points.push({
-        x: centerX,
-        y: centerY - 5 + i,
-        char: i === 0 ? 'o' : '|'
-      });
-    }
-    
-    // Antennae
-    points.push({ x: centerX - 2, y: centerY - 6, char: '/' });
-    points.push({ x: centerX + 2, y: centerY - 6, char: '\\' });
-    points.push({ x: centerX - 3, y: centerY - 7, char: '.' });
-    points.push({ x: centerX + 3, y: centerY - 7, char: '.' });
-    
-    return points;
-  }, []);
-
-  // Cosmos positions - scattered stars that will form butterfly
-  // Use seeded random for consistent server/client rendering
-  const cosmosPositions = useMemo(() => {
-    let seed = 12345; // Fixed seed for consistency
-    const seededRandom = () => {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280;
-    };
-    
-    return butterflyShape.map((_, i) => {
-      seededRandom(); // Advance seed
-      return {
-        x: seededRandom() * 70 + 5,
-        y: seededRandom() * 40 + 5,
-      };
-    });
-  }, [butterflyShape]);
-
-  // Animation sequence
   useEffect(() => {
-    const startTime = Date.now();
-    const duration = 3000; // 3 seconds
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      setAnimationProgress(progress);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        // Wait a bit for butterfly to fly away, then show content
-        setTimeout(() => {
-          setShowContent(true);
-        }, 500);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, []);
-
-  // Render animation
-  const renderAnimation = () => {
-    const canvas: string[][] = Array(50).fill(null).map(() => Array(80).fill(' '));
-    
-    if (animationProgress < 0.5) {
-      // Phase 1: Cosmos stars transform to butterfly (0-1.5s)
-      const transformProgress = animationProgress / 0.5;
-      const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      const eased = easeInOut(transformProgress);
-      
-      // Morph from cosmos positions to butterfly shape
-      butterflyShape.forEach((point, index) => {
-        const cosmosPos = cosmosPositions[index];
-        const currentX = cosmosPos.x + (point.x - cosmosPos.x) * eased;
-        const currentY = cosmosPos.y + (point.y - cosmosPos.y) * eased;
-        
-        const x = Math.round(currentX);
-        const y = Math.round(currentY);
-        
-        if (x >= 0 && x < 80 && y >= 0 && y < 50) {
-          canvas[y][x] = point.char;
+    if (headerRef.current && mounted) {
+      const updateDimensions = () => {
+        if (!headerRef.current) return;
+        const rect = headerRef.current.getBoundingClientRect();
+        if (rect) {
+          setHeaderDimensions({
+            width: rect.width,
+            height: rect.height
+          });
         }
-      });
-    } else {
-      // Phase 2: Butterfly flies away (1.5-3s)
-      const flyProgress = (animationProgress - 0.5) / 0.5;
-      const centerX = 40;
-      const centerY = 25;
+      };
       
-      butterflyShape.forEach((point) => {
-        const offsetX = point.x - centerX;
-        const offsetY = point.y - centerY;
-        const flyDistance = 100;
-        const currentX = point.x + offsetX * flyProgress * flyDistance / 20;
-        const currentY = point.y + offsetY * flyProgress * flyDistance / 20;
-        const opacity = 1 - flyProgress;
-        
-        const x = Math.round(currentX);
-        const y = Math.round(currentY);
-        
-        if (x >= 0 && x < 80 && y >= 0 && y < 50 && opacity > 0.1) {
-          canvas[y][x] = point.char;
-        }
-      });
+      // Small delay to ensure header is rendered
+      setTimeout(updateDimensions, 100);
+      // Also update after a longer delay to catch any layout shifts
+      setTimeout(updateDimensions, 500);
+      window.addEventListener('resize', updateDimensions);
+      return () => window.removeEventListener('resize', updateDimensions);
     }
-
-    return canvas.map(row => row.join('')).join('\n');
-  };
-
+  }, [mounted]);
 
   return (
     <main className="relative bg-black text-white font-mono min-h-screen overflow-x-hidden">
-      {/* Intro Animation - Blocks page for 3 seconds */}
-      {!showContent && mounted && (
-        <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
-          <pre className="text-[6px] sm:text-[8px] md:text-[10px] leading-[1.1] text-white font-mono whitespace-pre select-none">
-            {renderAnimation()}
-          </pre>
-          </div>
-      )}
-
       {/* ASCII Cosmos Background - Exact replica from https://github.com/nobytesgiven/ASCII-Cosmos.git */}
-      {showContent && <CosmosBackground />}
+      {mounted && <CosmosBackground />}
 
       {/* Main Content */}
-      {showContent && (
-        <div className="relative">
-          {/* Content */}
-          <div className="relative z-10 bg-black/10 backdrop-blur-sm min-h-screen">
-            <div className="mx-auto max-w-6xl px-6 py-20">
-              {/* Header */}
+      <div className="relative">
+        {/* Content */}
+        <div className="relative z-10 bg-black/10 backdrop-blur-sm min-h-screen">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            {/* ASCII Animation GIF - Option 4: Behind header as background */}
+            <div className="mb-16 flex justify-center">
+              <div 
+                ref={headerRef}
+                className="relative"
+                style={{
+                  display: 'inline-block',
+                  overflow: 'hidden',
+                  width: headerDimensions.width > 0 ? `${headerDimensions.width}px` : 'auto',
+                  height: headerDimensions.height > 0 ? `${headerDimensions.height}px` : 'auto',
+                  position: 'relative',
+                  boxSizing: 'border-box'
+                }}
+              >
+                {/* Background GIF - positioned behind the header box, contained within box */}
+                {headerDimensions.width > 0 && headerDimensions.height > 0 && (
+                  <div 
+                    className="absolute pointer-events-none"
+                    style={{
+                      opacity: 1.0,
+                      zIndex: 0,
+                      top: 0,
+                      left: 0,
+                      width: `${headerDimensions.width}px`,
+                      height: `${headerDimensions.height}px`,
+                      overflow: 'hidden',
+                      clipPath: `inset(0)`,
+                      boxSizing: 'border-box'
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${headerDimensions.width}px`,
+                        height: `${headerDimensions.height}px`,
+                        overflow: 'hidden',
+                        position: 'relative'
+                      }}
+                    >
+                      <Image
+                        src="/ascii-animation.gif"
+                        alt="ASCII Animation"
+                        width={Math.round(headerDimensions.width)}
+                        height={Math.round(headerDimensions.height)}
+                        style={{
+                          width: `${headerDimensions.width}px`,
+                          height: `${headerDimensions.height}px`,
+                          objectFit: 'cover',
+                          display: 'block',
+                          maxWidth: `${headerDimensions.width}px`,
+                          maxHeight: `${headerDimensions.height}px`,
+                          position: 'absolute',
+                          top: 0,
+                          left: 0
+                        }}
+                        unoptimized
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Header with enhanced visibility - on top */}
+                <div 
+                  className="relative"
+                  style={{
+                    position: 'relative',
+                    zIndex: 10
+                  }}
+                >
+                  <MainHeader />
+                </div>
+              </div>
+            </div>
+
+            {/* 
+              ALTERNATIVE OPTIONS (uncomment to try):
+              
+              OPTION 2: ASCII Box Frame around GIF
               <div className="mb-16 flex justify-center">
+                <div className="relative inline-block">
+                  <pre className="text-white font-mono text-xs leading-tight">
+{`┌─────────────────────────────────────┐
+│                                     │`}
+                  </pre>
+                  <div className="px-4">
+                    <Image
+                      src="/ascii-animation.gif"
+                      alt="ASCII Animation"
+                      width={300}
+                      height={225}
+                      className="max-w-full h-auto"
+                      unoptimized
+                    />
+                  </div>
+                  <pre className="text-white font-mono text-xs leading-tight">
+{`│                                     │
+└─────────────────────────────────────┘`}
+                  </pre>
+                </div>
+              </div>
+              
+              OPTION 3: Floating top-right corner
+              <div className="absolute top-4 right-4 z-20">
+                <Image
+                  src="/ascii-animation.gif"
+                  alt="ASCII Animation"
+                  width={200}
+                  height={150}
+                  className="opacity-60 hover:opacity-100 transition-opacity"
+                  unoptimized
+                />
+              </div>
+              
+              OPTION 4: Behind header as background
+              <div className="mb-16 flex justify-center relative">
+                <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+                  <Image
+                    src="/ascii-animation.gif"
+                    alt="ASCII Animation"
+                    width={600}
+                    height={450}
+                    className="max-w-full h-auto"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative z-10">
+                  <MainHeader />
+                </div>
+          </div>
+
+              OPTION 5: Wide banner at top
+              <div className="mb-8 w-full">
+                <Image
+                  src="/ascii-animation.gif"
+                  alt="ASCII Animation"
+                  width={1200}
+                  height={200}
+                  className="w-full h-auto object-cover opacity-70"
+                  unoptimized
+                />
+              </div>
+              
+              OPTION 6: Small next to header (side by side on desktop)
+              <div className="mb-16 flex flex-col md:flex-row items-center justify-center gap-8">
+                <div className="w-48 md:w-64">
+                  <Image
+                    src="/ascii-animation.gif"
+                    alt="ASCII Animation"
+                    width={256}
+                    height={192}
+                    className="w-full h-auto"
+                    unoptimized
+                  />
+                </div>
                 <MainHeader />
               </div>
+            */}
 
               {/* Grid Layout for Sections - Centered and aligned */}
               <div className="w-full flex justify-center">
@@ -526,13 +516,6 @@ export default function Home() {
                   <div className="space-y-4 w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 6}ch` }}>
                     <div className="py-2">
                       <div className="font-vt323 text-xl text-white mb-1">
-                        <a href="https://www.letthemhit.ca/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">LET THEM HIT</a>
-                      </div>
-                      <div className="font-vt323 text-base text-white/60">10k users in a week</div>
-                    </div>
-                    
-                    <div className="py-2">
-                      <div className="font-vt323 text-xl text-white mb-1">
                         <a href="https://github.com/ibrahim-ansari-code/LLM-Council-IDE" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">LLM COUNCIL IDE</a>
                       </div>
                       <div className="font-vt323 text-base text-white/60">quick project, 20 stars on github</div>
@@ -541,10 +524,14 @@ export default function Home() {
                     <div className="py-2">
                       <div className="font-vt323 text-xl text-white mb-1">
                         <a href="https://ummahhacks.com/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">UMMAH HACKS</a>
-            </div>
+                      </div>
                       <div className="font-vt323 text-base text-white/60">backed by YC startups and Shopify</div>
-            </div>
-          </div>
+                    </div>
+                    
+                    <div className="py-2 mt-6">
+                      <div className="font-vt323 text-base text-white/60">possible publication 👀</div>
+                    </div>
+                  </div>
                 </section>
 
                  {/* Research */}
@@ -582,7 +569,7 @@ export default function Home() {
                  <section className="flex flex-col">
                    <div className="mb-6 w-full flex justify-center">
                      <AsciiBox title="MUSIC" />
-                   </div>
+            </div>
                    
                    <div className="space-y-4 w-full pl-[2ch] relative" style={{ maxWidth: `${FIXED_BOX_WIDTH + 20}ch` }}>
                     <div className="flex items-center gap-3 py-2">
@@ -602,7 +589,7 @@ export default function Home() {
                         >
                           cold — nemzzz
                         </a>
-                      </div>
+            </div>
                       <div style={{ position: 'absolute', right: '0' }}>
                         <PlayButton songIndex={0} />
           </div>
@@ -811,10 +798,9 @@ export default function Home() {
                 <Webring />
               </div>
               </section>
-        </div>
           </div>
         </div>
-      )}
+      </div>
     </main>
   );
 }
