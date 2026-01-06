@@ -415,6 +415,48 @@
   50% { opacity: 1; }
 }
 
+/* ASCII Cosmos star styles - exact replica from https://github.com/nobytesgiven/ASCII-Cosmos.git */
+.allstars {
+  color: #bfbfbf;
+}
+
+.star {
+  z-index: 0;
+}
+
+.star1 {
+  animation: blink 2s infinite;
+  z-index: 0;
+}
+
+.star2 {
+  animation: blink 7s infinite;
+  z-index: 0;
+}
+
+.star3 {
+  animation: blink 13s infinite;
+  z-index: 0;
+}
+
+.star4 {
+  animation: blink 37s infinite;
+  z-index: 0;
+}
+
+.star5 {
+  animation: blink 107s infinite;
+  z-index: 0;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  25% { opacity: 0.5; }
+  50% { opacity: 0.25; }
+  75% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 @keyframes shoot {
   0% {
     transform: translate(0, 0) rotate(45deg);

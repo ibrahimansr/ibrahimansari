@@ -102,7 +102,7 @@ function MainHeader() {
             <td style={{ padding: 0, lineHeight: '1.2', whiteSpace: 'nowrap', width: `${maxWidth}ch`, textAlign: 'center' }}>
               management engineering @ uwaterloo
               <span style={{ display: 'inline-block', animation: 'float 3s ease-in-out infinite', marginLeft: '0.3em' }}>
-                <Image
+      <Image
                   src="/uwaterloo.png"
                   alt="University of Waterloo"
                   width={32}
@@ -110,7 +110,7 @@ function MainHeader() {
                   className="object-contain"
                   style={{ display: 'inline-block', verticalAlign: 'middle' }}
                 />
-              </span>
+    </span>
             </td>
             <td style={{ padding: 0, lineHeight: '1.2', whiteSpace: 'nowrap' }}>║</td>
           </tr>
@@ -128,6 +128,115 @@ function MainHeader() {
           </tr>
         </tbody>
       </table>
+    </div>
+  );
+}
+
+// ASCII Cosmos Background Component - Exact replica from https://github.com/nobytesgiven/ASCII-Cosmos.git
+function CosmosBackground() {
+  const [stars, setStars] = useState<Array<{ x: number; y: number; char: string; className: string }>>([]);
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+    
+    // Get window dimensions for star count calculation
+    const updateDimensions = () => {
+      if (typeof window === 'undefined') return;
+      
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      
+      // Exact calculation from ASCII Cosmos: 250 * window.innerWidth/2560
+      // Ensure minimum stars for visibility
+      const starCount = Math.max(Math.floor(250 * width / 2560), 100);
+      
+      // Generate stars exactly like ASCII Cosmos createStar function
+      const newStars: Array<{ x: number; y: number; char: string; className: string }> = [];
+      
+      for (let i = 0; i < starCount; i++) {
+        // Use Math.random() like ASCII Cosmos
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const t = Math.random();
+        
+        // Exact logic from ASCII Cosmos createStar: "*" by default, "." if t > 0.50
+        let char = "*";
+        if (t > 0.50) {
+          char = ".";
+        }
+        
+        // Assign animation class exactly like ASCII Cosmos
+        const r = Math.random();
+        let className = 'star'; // Default no animation
+        if (r < 1/6) className = 'star1';
+        else if (r < 2/6) className = 'star2';
+        else if (r < 3/6) className = 'star3';
+        else if (r < 4/6) className = 'star4';
+        else if (r < 5/6) className = 'star5';
+        
+        newStars.push({ x, y, char, className });
+      }
+      
+      setStars(newStars);
+      console.log(`Generated ${newStars.length} stars`); // Debug
+    };
+    
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+  
+  if (!mounted) return null;
+  
+  return (
+    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+      {stars.length > 0 ? (
+        <>
+          {stars.map((star, i) => {
+        // Animation durations from ASCII Cosmos CSS
+        const durations: { [key: string]: number } = {
+          'star': 0, // No animation
+          'star1': 2,
+          'star2': 7,
+          'star3': 13,
+          'star4': 37,
+          'star5': 107,
+        };
+        const duration = durations[star.className] || 0;
+        
+        return (
+          <pre
+            key={`cosmos-star-${i}`}
+            className={`allstars ${star.className}`}
+            style={{
+              position: 'absolute',
+              left: `${star.x}px`,
+              top: `${star.y}px`,
+              color: '#ffffff', // White for visibility
+              fontSize: '18px', // Slightly larger for visibility
+              lineHeight: '1',
+              margin: 0,
+              padding: 0,
+              animation: duration > 0 ? `blink ${duration}s infinite` : 'none',
+              opacity: 1.0, // Full opacity to ensure visibility
+              fontFamily: 'Consolas, monospace',
+              zIndex: 0,
+              whiteSpace: 'pre',
+              userSelect: 'none',
+              textShadow: '0 0 2px rgba(255, 255, 255, 0.5)', // Subtle glow for visibility
+            }}
+          >
+            {star.char}
+          </pre>
+        );
+      })}
+        </>
+      ) : (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontSize: '20px' }}>
+          Loading stars...
+        </div>
+      )}
     </div>
   );
 }
@@ -319,25 +428,6 @@ export default function Home() {
     return canvas.map(row => row.join('')).join('\n');
   };
 
-  // Shooting stars - use seeded random
-  const shootingStars = useMemo(() => {
-    let seed = 67890;
-    const seededRandom = () => {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280;
-    };
-    
-    return Array.from({ length: 3 }).map((_, i) => {
-      seededRandom();
-      return {
-        id: i,
-        x: seededRandom() * 100,
-        y: seededRandom() * 100,
-        delay: seededRandom() * 5,
-        duration: 1 + seededRandom() * 1
-      };
-    });
-  }, []);
 
   return (
     <main className="relative bg-black text-white font-mono min-h-screen overflow-x-hidden">
@@ -347,70 +437,17 @@ export default function Home() {
           <pre className="text-[6px] sm:text-[8px] md:text-[10px] leading-[1.1] text-white font-mono whitespace-pre select-none">
             {renderAnimation()}
           </pre>
-        </div>
+          </div>
       )}
+
+      {/* ASCII Cosmos Background - Exact replica from https://github.com/nobytesgiven/ASCII-Cosmos.git */}
+      {showContent && <CosmosBackground />}
 
       {/* Main Content */}
       {showContent && (
         <div className="relative">
-          {/* Twinkling Stars Background */}
-          <div className="fixed inset-0 pointer-events-none z-0">
-            {Array.from({ length: 100 }).map((_, i) => {
-              // Use seeded random for consistent positions
-              let seed = 54321 + i;
-              const seededRandom = () => {
-                seed = (seed * 9301 + 49297) % 233280;
-                return seed / 233280;
-              };
-              
-              const x = seededRandom() * 100;
-              const y = seededRandom() * 100;
-              const size = seededRandom() * 2 + 1;
-              const delay = seededRandom() * 3;
-              const duration = 2 + seededRandom() * 2;
-              
-  return (
-                <div
-                  key={`star-${i}`}
-                  className="absolute text-white/30"
-                  style={{
-                    left: `${x}%`,
-                    top: `${y}%`,
-                    fontSize: `${size}px`,
-                    animation: `twinkle ${duration}s infinite`,
-                    animationDelay: `${delay}s`,
-                  }}
-                >
-                  *
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Shooting Stars */}
-          <div className="fixed inset-0 pointer-events-none z-0">
-            {shootingStars.map((star) => (
-              <div
-                key={star.id}
-                className="absolute text-white/80"
-                style={{
-                  left: `${star.x}%`,
-                  top: `${star.y}%`,
-                  animation: `shoot ${star.duration}s infinite`,
-                  animationDelay: `${star.delay}s`,
-                }}
-              >
-                <span className="inline-block">*</span>
-                <span className="inline-block ml-1">-</span>
-                <span className="inline-block ml-1">-</span>
-                <span className="inline-block ml-1">-</span>
-                <span className="inline-block ml-1">-</span>
-              </div>
-            ))}
-          </div>
-
           {/* Content */}
-          <div className="relative z-10 bg-black/80 backdrop-blur-sm min-h-screen">
+          <div className="relative z-10 bg-black/10 backdrop-blur-sm min-h-screen">
             <div className="mx-auto max-w-6xl px-6 py-20">
               {/* Header */}
               <div className="mb-16 flex justify-center">
@@ -427,8 +464,8 @@ export default function Home() {
                 <section className="flex flex-col">
                   <div className="mb-6 w-full flex justify-center">
                     <AsciiBox title="EXPERIENCE" />
-                  </div>
-                  
+            </div>
+
                   <div className="space-y-4 w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 6}ch` }}>
                     <div className="py-2 flex items-center gap-2">
                       <Image
@@ -443,7 +480,7 @@ export default function Home() {
                           SOFTWARE ENGINEER — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">BRIKLI</a>
                         </div>
                         <div className="font-vt323 text-base text-white/60">making housing easier</div>
-                      </div>
+              </div>
             </div>
 
                     <div className="py-2 flex items-center gap-2">
@@ -470,7 +507,7 @@ export default function Home() {
                         height={32}
                         className="object-contain flex-shrink-0"
                       />
-                      <div>
+            <div>
                         <div className="font-vt323 text-xl text-white mb-1 whitespace-nowrap">
                           DATA SCIENTIST INTERN — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="text-white/80 hover:text-white underline">WWF</a>
                         </div>
@@ -568,7 +605,7 @@ export default function Home() {
                       </div>
                       <div style={{ position: 'absolute', right: '0' }}>
                         <PlayButton songIndex={0} />
-                      </div>
+          </div>
         </div>
 
                     <div className="flex items-center gap-3 py-2 relative">
@@ -687,8 +724,8 @@ export default function Home() {
                <section className="flex flex-col">
                  <div className="mb-6 w-full flex justify-center">
                    <AsciiBox title="PICTURES" />
-                 </div>
-                 
+        </div>
+
                  <div className="w-full pl-[2ch]" style={{ maxWidth: `${FIXED_BOX_WIDTH + 18}ch` }}>
                    <div className="overflow-x-auto border-2 border-white/20 p-4">
                      <div className="flex gap-4" style={{ minWidth: 'max-content' }}>
