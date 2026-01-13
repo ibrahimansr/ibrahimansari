@@ -104,10 +104,6 @@ export default function Home() {
         >
           <div className="custom-section-title">stuff from this month</div>
           <div>
-            <div className="custom-project-title"><a className="hover-scale" href="https://www.letthemhit.ca/" target="_blank" rel="noreferrer">let them hit</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">10k users in a week</div>
-          </div>
-          <div>
             <div className="custom-project-title"><a className="hover-slide" href="https://github.com/ibrahim-ansari-code/LLM-Council-IDE" target="_blank" rel="noreferrer">LLM Council IDE</a></div>
             <div className="text-neutral-600 dark:text-neutral-400 custom-small">quick project, 20 stars on github</div>
           </div>
