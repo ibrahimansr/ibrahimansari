@@ -92,44 +92,6 @@ export default function About() {
         <div className="custom-divider-thick" />
 
         <div className="custom-body space-y-4 section-border">
-          <div className="custom-section-title">recommendations</div>
-          <div className="space-y-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">📺</span>
-                <a href="https://youtube.com/playlist?list=PLbVdwtmx18suCuPDLce5slcf8uCyJREBp&si=5-I5ZCir-qS7mnth" target="_blank" rel="noreferrer" className="text-neutral-800 dark:text-neutral-200 hover:underline font-medium">Humsafar</a>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">📺</span>
-                <a href="https://youtube.com/playlist?list=PLb2aaNHUy_gHlSsv6128U9ZeoAPbZyBuj&si=SwvlyKsYF313vbWB" target="_blank" rel="noreferrer" className="text-neutral-800 dark:text-neutral-200 hover:underline font-medium">Kabhi Main Kabhi Tum</a>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">📚</span>
-                <a href="https://archive.org/details/universalguideto0000coxb" target="_blank" rel="noreferrer" className="text-neutral-800 dark:text-neutral-200 hover:underline font-medium">Universal: A Guide to the Cosmos</a>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">🎬</span>
-                <a href="https://watch32.sx/movie/watch-spider-man-into-the-spider-verse-sequel-full-66674" target="_blank" rel="noreferrer" className="text-neutral-800 dark:text-neutral-200 hover:underline font-medium">Spider-Man: Across The Spider-Verse</a>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">🎬</span>
-                <a href="https://watch32.sx/movie/watch-a-man-called-otto-full-91870" target="_blank" rel="noreferrer" className="text-neutral-800 dark:text-neutral-200 hover:underline font-medium">A Man Called Otto</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="custom-divider-thick" />
-
-        <div className="custom-body space-y-4 section-border">
           <div className="custom-section-title">pictures</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
