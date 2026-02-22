@@ -1,170 +1,82 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Mail, Github, Linkedin, Twitter, Instagram } from "lucide-react";
-import Webring from "@/components/ui/webring";
-// import { useEyeTracking } from "@/hooks/useEyeTracking";
-// const unused = "test";
-// const oldCode = () => { return null; };
-// let debug = false;
+import Image from 'next/image'
+import { Github, Linkedin, Twitter, Instagram } from 'lucide-react'
 
-function Logo({ src, alt, size = 18, darkSrc, invertDark }: { src: string; alt: string; size?: number; darkSrc?: string; invertDark?: boolean }) {
-  return (
-    <span className="inline-flex items-center justify-center self-center">
-      <Image
-        src={src}
-        alt={alt}
-        width={size}
-        height={size}
-        sizes={`${size}px`}
-        quality={100}
-        priority={false}
-        className={`h-[${size}px] w-[${size}px] object-contain ${darkSrc ? 'dark:hidden' : ''}`}
-      />
-      {darkSrc && (
-        <Image
-          src={darkSrc}
-          alt={alt}
-          width={size}
-          height={size}
-          sizes={`${size}px`}
-          quality={100}
-          priority={false}
-          className={`h-[${size}px] w-[${size}px] object-contain hidden dark:block ${invertDark ? 'dark:brightness-0 dark:invert' : ''}`}
-        />
-      )}
-    </span>
-  );
-}
-
+const MONARCH_PAPER = 'https://journal.stemfellowship.org/doi/abs/10.17975/sfj-2024-004'
+const BUDGET_PAPER = 'https://journal.stemfellowship.org/doi/abs/10.17975/sfj-2025-001'
+const SPOTIFY_TRACK = 'https://open.spotify.com/track/1Jguf6gwtrywE2mRHqsdmY?si=4a0f7722fd4f4cf7'
+const BRIKLI_URL = 'https://brikli.com/'
 
 export default function Home() {
   return (
-    <main className="relative">
-      <div className="relative z-10 mx-auto max-w-screen-md pl-4 pr-6 sm:pl-2 sm:pr-4">
-        <div className="pt-16 sm:pt-24" />
+    <main className="min-h-screen bg-black text-white flex flex-col items-center">
+      {/* Single centered column — Jeffrey Zang / Zachary Yu style */}
+      <div className="w-full max-w-xl mx-auto px-6 pt-16 pb-24 flex flex-col items-start">
+        <header className="w-full flex items-center justify-between mb-16">
+          <p className="text-lg text-white">
+            redesign in progress...
+          </p>
+          <nav className="flex items-center gap-5">
+            <a href="https://github.com/ibrahim-ansari-code" target="_blank" rel="noreferrer" title="GitHub" className="text-white hover:opacity-80 transition-opacity">
+              <Github size={20} />
+            </a>
+            <a href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn" className="text-white hover:opacity-80 transition-opacity">
+              <Linkedin size={20} />
+            </a>
+            <a href="https://x.com/ibrahimansr" target="_blank" rel="noreferrer" title="X (Twitter)" className="text-white hover:opacity-80 transition-opacity">
+              <Twitter size={20} />
+            </a>
+            <a href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram" className="text-white hover:opacity-80 transition-opacity">
+              <Instagram size={20} />
+            </a>
+          </nav>
+        </header>
 
-        <div className="flex gap-8">
-          <div className="flex flex-col gap-4 min-w-[120px]">
-            <Link href="/" className="font-extralight hover-scale text-left">home</Link>
-            <Link href="/about" className="font-extralight hover-scale text-left">other</Link>
-          </div>
+        <div className="flex flex-col gap-6 text-white text-left">
+          <p className="text-base leading-relaxed">
+            currently @{' '}
+            <Image
+              src="/brikli-logo.png"
+              alt="Brikli"
+              width={16}
+              height={16}
+              className="inline-block align-middle brightness-0 invert"
+            />
+            {' '}
+            <a href={BRIKLI_URL} target="_blank" rel="noreferrer" className="link-sweep">
+              Brikli
+            </a>
+          </p>
 
-          <div className="flex-1">
-            <div className="custom-body space-y-4 animate-[fadeIn_400ms_ease]">
-              <div className="flex items-center gap-3">
-                <h1 className="custom-header">Ibrahim Ansari</h1>
-                <Logo src="/waterloo-logo.png" alt="University of Waterloo" size={32} darkSrc="/waterloo-logo-dark.png" />
-              </div>
-              <div className="text-neutral-600 dark:text-neutral-400">
-                <span>management engineering @ uwaterloo</span>
-              </div>
-            </div>
+          <p className="text-base leading-relaxed">
+            learning to post-train models
+          </p>
 
-        <div className="custom-divider-thick" />
+          <p className="text-base leading-relaxed">
+            check out my papers on{' '}
+            <a href={MONARCH_PAPER} target="_blank" rel="noreferrer" className="link-sweep">
+              monarch butterflies
+            </a>
+            {' '}and{' '}
+            <a href={BUDGET_PAPER} target="_blank" rel="noreferrer" className="link-sweep">
+              budgeting education
+            </a>
+          </p>
 
-        <div 
-          id="experience-section"
-          className="custom-body space-y-4 animate-[fadeIn_600ms_ease] section-border"
-        >
-          <div className="custom-section-title">experience</div>
-          <div className="flex items-start gap-3">
-            <div className="flex items-center pt-0.5">
-              <Logo src="/brikli-logo.png" alt="Brikli" size={36} />
-            </div>
-            <div>
-              <div className="custom-project-title">software engineer — <a href="https://brikli.com/" target="_blank" rel="noreferrer" className="hover-glow">brikli</a></div>
-              <div className="text-neutral-600 dark:text-neutral-400 custom-small">making housing easier</div>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="flex items-center pt-0.5">
-              <Logo src="/tablingos-logo.png" alt="Tablingos" size={36} />
-            </div>
-            <div>
-              <div className="custom-project-title">co‑founder — <a href="https://www.linkedin.com/company/tablingos/about/" target="_blank" rel="noreferrer" className="hover-glow">tablingos</a></div>
-              <div className="text-neutral-600 dark:text-neutral-400 custom-small">data automation backed by Microsoft</div>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="flex items-center pt-0.5">
-              <Logo src="/wwf-logo.png" alt="WWF" size={36} darkSrc="/wwf-logo.png" invertDark={true} />
-            </div>
-            <div>
-              <div className="custom-project-title">data scientist intern — <a href="https://www.worldwildlife.org/" target="_blank" rel="noreferrer" className="hover-glow">wwf</a></div>
-              <div className="text-neutral-600 dark:text-neutral-400 custom-small">using data science to do good</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="custom-divider" />
-
-        <div 
-          id="projects-section"
-          className="custom-body space-y-4 animate-[fadeIn_700ms_ease] section-border"
-        >
-          <div className="custom-section-title">stuff from this month</div>
-          <div>
-            <div className="custom-project-title"><a className="hover-slide" href="https://github.com/ibrahim-ansari-code/LLM-Council-IDE" target="_blank" rel="noreferrer">LLM Council IDE</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">quick project, 20 stars on github</div>
-          </div>
-          <div>
-            <div className="custom-project-title"><a className="hover-glow" href="https://ummahhacks.com/" target="_blank" rel="noreferrer">Ummah Hacks</a></div>
-            <div className="text-neutral-600 dark:text-neutral-400 custom-small">backed by YC startups and Shopify</div>
-          </div>
-        </div>
-
-        <div className="custom-divider-thick" />
-
-        <div 
-          id="research-section"
-          className="custom-body space-y-4 animate-[fadeIn_800ms_ease] section-border"
-        >
-          <div className="custom-section-title">research papers</div>
-          <div className="space-y-3">
-            <div>
-              <a className="hover-scale" href="https://journal.stemfellowship.org/doi/abs/10.17975/sfj-2025-001" target="_blank" rel="noreferrer">optimizing budget allocations in ontario school boards for efficient, equitable, and inclusive education</a>
-            </div>
-            <div>
-              <a className="hover-slide" href="https://journal.stemfellowship.org/doi/abs/10.17975/sfj-2024-004" target="_blank" rel="noreferrer">analyzing urban heat islands and their impact on the monarch butterfly population</a>
-            </div>
-          </div>
-        </div>
-
-        <div className="custom-divider" />
-
-        <div 
-          id="contact-section"
-          className="custom-body animate-[fadeIn_900ms_ease] section-border"
-        >
-          <div className="pt-6" />
-          <footer className="pb-6">
-            <div className="custom-contact">contact</div>
-            <div className="mt-4 flex items-center gap-6">
-              <a className="hover-scale" href="mailto:ibrahim.ansari4161@gmail.com" title="Email">
-                <Mail size={20} className="text-neutral-600 dark:text-neutral-400" />
-              </a>
-              <a className="hover-slide" href="https://github.com/ibrahim-ansari-code" target="_blank" rel="noreferrer" title="GitHub">
-                <Github size={20} className="text-gray-800 dark:text-gray-200" />
-              </a>
-              <a className="hover-glow" href="https://www.linkedin.com/in/ibrahim-ansari-775529270/" target="_blank" rel="noreferrer" title="LinkedIn">
-                <Logo src="/linkedin.webp" alt="LinkedIn" size={20} />
-              </a>
-              <a className="hover-scale" href="https://x.com/ibrahimansr" target="_blank" rel="noreferrer" title="X (Twitter)">
-                <Twitter size={20} className="text-black dark:text-white" />
-              </a>
-              <a className="hover-slide" href="https://www.instagram.com/ibrahim.ansr/" target="_blank" rel="noreferrer" title="Instagram">
-                <Instagram size={20} className="text-pink-600" />
-              </a>
-              <div className="ml-auto">
-                <Webring />
-              </div>
-            </div>
-          </footer>
-        </div>
-          </div>
+          <p className="text-base leading-relaxed flex flex-wrap items-center gap-2">
+            <span>currently playing</span>
+            <Image
+              src="/scandinavian-thing.png"
+              alt="A Scandinavian Thing — Peter Sandberg"
+              width={28}
+              height={28}
+              className="rounded-sm inline-block shrink-0"
+            />
+            <a href={SPOTIFY_TRACK} target="_blank" rel="noreferrer" className="link-sweep">
+              got that feeling
+            </a>
+          </p>
         </div>
       </div>
     </main>
-  );
+  )
 }
-

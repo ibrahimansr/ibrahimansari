@@ -1,21 +1,12 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
-import FaceGestureTracker from '@/components/ui/mediapipe-hand-tracker'
-import MusicPlayer from '@/components/ui/music-player'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { MusicProvider } from '@/contexts/MusicContext'
+import BackgroundAudio from '@/components/ui/background-audio'
+import ClickSound from '@/components/ui/click-sound'
 import { Analytics } from '@vercel/analytics/react'
 
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ['latin'], 
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-space-grotesk'
-})
-
 export const metadata: Metadata = {
-  title: "ibrahim ansari — portfolio",
-  description: 'about, experience, projects, research',
+  title: 'ibrahim ansari',
+  description: 'learning to post-train models',
   icons: { icon: '/logo.png' },
 }
 
@@ -25,15 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${spaceGrotesk.variable} font-sans antialiased`}>
-        <MusicProvider>
-          <ThemeToggle />
-          <FaceGestureTracker />
-          <MusicPlayer />
-          <audio id="global-audio" style={{ display: 'none' }} />
-          {children}
-        </MusicProvider>
+    <html lang="en" className="bg-black">
+      <body className="bg-black text-white min-h-screen">
+        <BackgroundAudio />
+        <ClickSound />
+        {children}
         <Analytics />
       </body>
     </html>

@@ -2,6 +2,9 @@
   "name": "ibrahim-portfolio",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,18 +12,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mediapipe/camera_utils": "^0.3.1675466862",
-    "@mediapipe/face_mesh": "^0.4.1633559619",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",
     "next": "^14.0.0",
     "postcss": "^8.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^3.3.1",
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
