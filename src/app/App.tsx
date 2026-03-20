@@ -15,7 +15,6 @@ export default function App() {
   const [copied, setCopied] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const sixMonthsAgo = React.useMemo(() => {
     const date = new Date();
     date.setMonth(date.getMonth() - 6);
@@ -59,127 +58,8 @@ export default function App() {
     player.pause();
   };
 
-  React.useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let rafId = 0;
-    let w = 0;
-    let h = 0;
-    let dpr = 1;
-
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0, active: false };
-    const blobs = Array.from({ length: 6 }, (_, i) => ({
-      baseX: 0.18 + i * 0.14,
-      baseY: 0.25 + (i % 2) * 0.45,
-      radius: 140 + i * 18,
-      hue: [176, 197, 212, 165, 230, 188][i],
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.18 + Math.random() * 0.24,
-      drift: 0.025 + Math.random() * 0.035,
-    }));
-
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      pointer.x = w * 0.5;
-      pointer.y = h * 0.42;
-      pointer.tx = pointer.x;
-      pointer.ty = pointer.y;
-    };
-
-    const onPointerMove = (e: PointerEvent) => {
-      pointer.tx = e.clientX;
-      pointer.ty = e.clientY;
-      pointer.active = true;
-    };
-
-    const onPointerLeave = () => {
-      pointer.active = false;
-      pointer.tx = w * 0.5;
-      pointer.ty = h * 0.42;
-    };
-
-    const drawGlow = (x: number, y: number, r: number, color: string, alpha = 1) => {
-      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0, color);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
-    };
-
-    const render = (timeMs: number) => {
-      const t = timeMs * 0.001;
-      pointer.x += (pointer.tx - pointer.x) * 0.075;
-      pointer.y += (pointer.ty - pointer.y) * 0.075;
-
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#020202';
-      ctx.fillRect(0, 0, w, h);
-      ctx.globalCompositeOperation = 'screen';
-
-      blobs.forEach((b, i) => {
-        const sx = w * b.baseX + Math.sin(t * b.speed + b.phase) * (w * b.drift);
-        const sy = h * b.baseY + Math.cos(t * (b.speed * 0.9) + b.phase) * (h * b.drift);
-        const pulse = 1 + Math.sin(t * 0.7 + i) * 0.1;
-        drawGlow(sx, sy, b.radius * pulse, `hsla(${b.hue}, 78%, 64%, 0.26)`);
-      });
-
-      const pointerSize = pointer.active ? 210 : 165;
-      drawGlow(pointer.x, pointer.y, pointerSize, 'rgba(170, 236, 255, 0.24)', 0.95);
-      drawGlow(pointer.x * 0.86 + w * 0.07, pointer.y * 0.88 + h * 0.06, 120, 'rgba(116, 143, 255, 0.16)');
-
-      ctx.globalCompositeOperation = 'source-over';
-      const vignette = ctx.createRadialGradient(w * 0.5, h * 0.45, h * 0.08, w * 0.5, h * 0.5, h * 0.8);
-      vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      vignette.addColorStop(1, 'rgba(0, 0, 0, 0.58)');
-      ctx.fillStyle = vignette;
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.globalAlpha = 0.04;
-      for (let i = 0; i < 120; i += 1) {
-        const x = (Math.random() * w) | 0;
-        const y = (Math.random() * h) | 0;
-        ctx.fillStyle = i % 2 ? '#ffffff' : '#9cd9ff';
-        ctx.fillRect(x, y, 1, 1);
-      }
-      ctx.globalAlpha = 1;
-
-      rafId = window.requestAnimationFrame(render);
-    };
-
-    resize();
-    rafId = window.requestAnimationFrame(render);
-    window.addEventListener('resize', resize);
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerleave', onPointerLeave);
-
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerleave', onPointerLeave);
-    };
-  }, []);
-
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none absolute inset-0 z-0"
-        aria-hidden="true"
-      />
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
       <div className="relative z-10 px-8 py-20 md:px-16 md:py-32 max-w-3xl mx-auto">
         
         {/* Header with socials */}
@@ -220,7 +100,7 @@ export default function App() {
         {/* Main content - all text */}
         <main className="space-y-16 text-base leading-relaxed" style={{ fontWeight: 300 }}>
           <p>
-            i've done 5 technical roles, currently founding eng @ <a href="https://brikli.com/" target="_blank" rel="noopener noreferrer" className="border-b border-white hover:opacity-70 transition-opacity">brikli</a> (antler s26). 
+            i've done 5 technical roles, currently founding eng @ <a href="https://brikli.com/" target="_blank" rel="noopener noreferrer" className="border-b border-white hover:opacity-70 transition-opacity">brikli</a> (antler w26). 
             studying management engineering @ uwaterloo
           </p>
           <p>
