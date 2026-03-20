@@ -63,7 +63,12 @@ export default function App() {
       <div className="px-8 py-20 md:px-16 md:py-32 max-w-3xl mx-auto">
         
         {/* Header with socials */}
-        <header className="flex justify-end items-start mb-40">
+        <header className="flex justify-between items-start mb-40">
+          <img
+            src="/minion-hoverboard.png"
+            alt="Minion on hoverboard"
+            className="h-15 w-15 object-cover"
+          />
           <nav className="flex gap-6 text-sm">
             <a 
               href="https://github.com/ibrahim-ansari-code" 
