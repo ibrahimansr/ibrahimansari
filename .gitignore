@@ -1,7 +1,0 @@
-.vercel
-node_modules
-.next
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
