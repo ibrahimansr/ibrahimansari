@@ -15,7 +15,6 @@ export default function App() {
   const [copied, setCopied] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const webringContainerRef = React.useRef<HTMLDivElement | null>(null);
   const sixMonthsAgo = React.useMemo(() => {
     const date = new Date();
     date.setMonth(date.getMonth() - 6);
@@ -58,24 +57,6 @@ export default function App() {
 
     player.pause();
   };
-
-  React.useEffect(() => {
-    const container = webringContainerRef.current;
-    if (!container) return;
-
-    const scriptId = 'uwaterloo-webring-embed';
-    const existing = document.getElementById(scriptId);
-    if (existing) return;
-
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = 'https://uwaterloo.network/embed.js';
-    script.setAttribute('data-webring', '');
-    script.setAttribute('data-user', 'ibrahim-ansari');
-    script.setAttribute('data-color', 'red');
-    script.setAttribute('data-arrow', 'chevron');
-    container.appendChild(script);
-  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
@@ -209,14 +190,6 @@ export default function App() {
           </div>
         </section>
 
-        <footer className="mt-16 flex justify-center pb-2">
-          <div
-            className="flex min-h-10 items-center justify-center opacity-95 [filter:grayscale(1)_saturate(0)_brightness(3)_contrast(1.2)]"
-            style={{ transform: 'scale(0.55)', transformOrigin: 'center top' }}
-          >
-            <div ref={webringContainerRef} />
-          </div>
-        </footer>
       </div>
     </div>
   );
