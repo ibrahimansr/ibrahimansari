@@ -65,7 +65,7 @@ export default function App() {
         {/* Header with socials */}
         <header className="flex justify-between items-start mb-20">
           <img
-            src="/minion-hoverboard.png"
+            src="/minion-hoverboard.gif"
             alt="Minion on hoverboard"
             className="h-15 w-15 object-cover"
           />
