@@ -1,75 +1,19 @@
 import React from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 
-const TRACKS = [
-  {
-    title: '2Tone',
-    artist: 'Don Toliver',
-    src: '/2TONE feat. Don Toliver.mp3',
-    cover: '/covers/2tone-don-toliver.jpg',
-  },
-  {
-    title: '8PM',
-    artist: 'Nemzzz',
-    src: '/NEMZZZ 8PM Official Video.mp3',
-    cover: '/Rents Due Nemzz.jpeg',
-  },
-  {
-    title: 'As We Speak',
-    artist: 'Drake',
-    src: '/As We Speak feat. Drake Official Audio.mp3',
-    cover: '/covers/as-we-speak-drake.jpg',
-  },
-  {
-    title: 'Cold',
-    artist: 'Chris Stapleton',
-    src: '/Cold Official Video.mp3',
-    cover: '/covers/cold.jpg',
-  },
-  {
-    title: 'Everybody Loves Somebody',
-    artist: 'Dean Martin',
-    src: '/Dean Martin Everybody Loves Somebody.mp3',
-    cover: '/covers/everybody-loves-somebody.jpg',
-  },
-  {
-    title: 'Fly Me to the Moon',
-    artist: 'Frank Sinatra',
-    src: '/Fly Me To The Moon - Frank Sinatra.mp3',
-    cover: '/Fly Me to the Moon Frank Sinatra.jpeg',
-  },
-  {
-    title: 'Got That Feeling',
-    artist: 'Foster The People',
-    src: '/got-that-feeling.mp3',
-    cover: '/covers/got-that-feeling.jpg',
-  },
-  {
-    title: 'Humsafar OST',
-    artist: 'Qurat-ul-Ain Balouch',
-    src: '/Humsafar OST by Qurat-ul-Ain Balouch.mp3',
-    cover: '/covers/humsafar-ost.jpg',
-  },
-  {
-    title: 'Jimmy Cooks',
-    artist: 'Drake ft. 21 Savage',
-    src: '/Drake Jimmy Cooks ft 21 Savage.mp3',
-    cover: '/covers/jimmy-cooks.jpg',
-  },
-  {
-    title: 'Sajna Da Dil Torya',
-    artist: 'Zeeshan Ali',
-    src: '/SAJNA DA DIL TORYA _ VIDEO SONG - 4K _ KABHI MAIN KABHI TUM _ MUSTAFA x SHARJEENA.mp3',
-    cover: '/covers/sajna-da-dil-torya.jpg',
-  },
-];
+const TRACK = {
+  title: 'Fly Me to the Moon',
+  artist: 'Frank Sinatra',
+  src: '/Fly Me To The Moon - Frank Sinatra.mp3',
+  cover: '/Fly Me to the Moon Frank Sinatra.jpeg',
+};
+
+const CONTRIBUTION_BLOCK_SIZE = 12;
+const CONTRIBUTION_BLOCK_MARGIN = 4;
 
 export default function App() {
   const [copied, setCopied] = React.useState(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
-  const [duration, setDuration] = React.useState(0);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const sixMonthsAgo = React.useMemo(() => {
     const date = new Date();
@@ -114,61 +58,12 @@ export default function App() {
     player.pause();
   };
 
-  const currentTrack = TRACKS[currentTrackIndex];
-
-  const goToNextTrack = React.useCallback(() => {
-    setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
-  }, []);
-
-  const goToPreviousTrack = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
-  };
-
-  React.useEffect(() => {
-    const player = audioRef.current;
-    if (!player) return;
-
-    player.load();
-    setProgress(0);
-    setDuration(0);
-
-    if (isPlaying) {
-      player.play().catch(() => {
-        setIsPlaying(false);
-      });
-    }
-  }, [currentTrackIndex, isPlaying]);
-
-  const onTimeUpdate = () => {
-    const player = audioRef.current;
-    if (!player || !player.duration) {
-      setProgress(0);
-      return;
-    }
-
-    setProgress((player.currentTime / player.duration) * 100);
-  };
-
-  const onLoadedMetadata = () => {
-    const player = audioRef.current;
-    if (!player || !player.duration) return;
-    setDuration(player.duration);
-  };
-
-  const formatTime = (seconds: number) => {
-    if (!Number.isFinite(seconds) || seconds <= 0) return '0:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
       <div className="px-8 py-20 md:px-16 md:py-32 max-w-3xl mx-auto">
         
         {/* Header with socials */}
-        <header className="flex justify-between items-start mb-40">
-          <div className="w-8 h-8" style={{ backgroundColor: '#3EBCB3' }} />
+        <header className="flex justify-end items-start mb-40">
           <nav className="flex gap-6 text-sm">
             <a 
               href="https://github.com/ibrahim-ansari-code" 
@@ -224,8 +119,8 @@ export default function App() {
           </div>
         </main>
 
-        <section className="mt-28 grid gap-8 md:grid-cols-[minmax(0,1fr)_300px] md:items-start">
-          <div className="overflow-x-auto">
+        <section className="mt-20 flex flex-col gap-1 md:flex-row md:items-end md:gap-15">
+          <div className="w-full overflow-x-auto md:w-auto">
             <a
               href="https://github.com/ibrahim-ansari-code"
               target="_blank"
@@ -240,8 +135,8 @@ export default function App() {
                 showMonthLabels={false}
                 showTotalCount={false}
                 showWeekdayLabels={false}
-                blockSize={11}
-                blockMargin={4}
+                blockSize={CONTRIBUTION_BLOCK_SIZE}
+                blockMargin={CONTRIBUTION_BLOCK_MARGIN}
                 fontSize={12}
                 transformData={(data) =>
                   data.filter((day) => new Date(day.date) >= sixMonthsAgo)
@@ -250,48 +145,30 @@ export default function App() {
             </a>
           </div>
 
-          <div className="border border-white/20 bg-black/40 p-5 backdrop-blur-sm">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/50">Now Playing</p>
-            <div className="mt-3 overflow-hidden border border-white/15">
-              <img
-                src={currentTrack.cover}
-                alt={`${currentTrack.title} cover art`}
-                className="h-44 w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p className="mt-4 text-base">{currentTrack.title}</p>
-            <p className="mt-1 text-xs text-white/50">{currentTrack.artist}</p>
+          <div className="relative aspect-square w-24 overflow-hidden border border-white/30 bg-black/30 shadow-[0_8px_28px_rgba(0,0,0,0.45)] md:w-[108px]">
+            <img
+              src={TRACK.cover}
+              alt={`${TRACK.title} cover art`}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
 
-            <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full transition-all"
-                style={{ width: `${progress}%`, backgroundColor: '#3EBCB3' }}
-              />
-            </div>
-            <div className="mt-2 flex justify-between text-[11px] text-white/45">
-              <span>{formatTime((progress / 100) * duration)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-
-            <div className="mt-4 flex items-center gap-3">
-              <button
-                onClick={goToPreviousTrack}
-                className="border border-white/30 px-3 py-2 text-sm transition-colors hover:border-white/70"
-              >
-                prev
-              </button>
+            <div className="relative flex h-full items-center justify-center p-5">
               <button
                 onClick={togglePlayback}
-                className="min-w-20 border border-white/30 px-4 py-2 text-sm transition-colors hover:border-white/70"
+                aria-label={isPlaying ? 'Pause' : 'Play'}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/70 bg-black/35 text-white shadow-[0_6px_22px_rgba(0,0,0,0.45)] backdrop-blur-md transition-colors hover:bg-black/50"
               >
-                {isPlaying ? 'pause' : 'play'}
-              </button>
-              <button
-                onClick={goToNextTrack}
-                className="border border-white/30 px-3 py-2 text-sm transition-colors hover:border-white/70"
-              >
-                next
+                {isPlaying ? (
+                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <rect x="3" y="2" width="3" height="12" fill="currentColor" rx="1" />
+                    <rect x="10" y="2" width="3" height="12" fill="currentColor" rx="1" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor" />
+                  </svg>
+                )}
               </button>
             </div>
 
@@ -300,16 +177,13 @@ export default function App() {
               preload="metadata"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
-              onEnded={goToNextTrack}
-              onTimeUpdate={onTimeUpdate}
-              onLoadedMetadata={onLoadedMetadata}
+              onEnded={() => setIsPlaying(false)}
               className="hidden"
             >
-              <source src={currentTrack.src} type="audio/mpeg" />
+              <source src={TRACK.src} type="audio/mpeg" />
             </audio>
           </div>
         </section>
-
       </div>
     </div>
   );
