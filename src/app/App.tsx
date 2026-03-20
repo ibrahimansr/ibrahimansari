@@ -15,6 +15,7 @@ export default function App() {
   const [copied, setCopied] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const webringContainerRef = React.useRef<HTMLDivElement | null>(null);
   const sixMonthsAgo = React.useMemo(() => {
     const date = new Date();
     date.setMonth(date.getMonth() - 6);
@@ -58,12 +59,30 @@ export default function App() {
     player.pause();
   };
 
+  React.useEffect(() => {
+    const container = webringContainerRef.current;
+    if (!container) return;
+
+    const scriptId = 'uwaterloo-webring-embed';
+    const existing = document.getElementById(scriptId);
+    if (existing) return;
+
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = 'https://uwaterloo.network/embed.js';
+    script.setAttribute('data-webring', '');
+    script.setAttribute('data-user', 'ibrahim-ansari');
+    script.setAttribute('data-color', 'red');
+    script.setAttribute('data-arrow', 'chevron');
+    container.appendChild(script);
+  }, []);
+
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
       <div className="px-8 py-20 md:px-16 md:py-32 max-w-3xl mx-auto">
         
         {/* Header with socials */}
-        <header className="flex justify-between items-start mb-40">
+        <header className="flex justify-between items-start mb-20">
           <img
             src="/minion-hoverboard.png"
             alt="Minion on hoverboard"
@@ -124,7 +143,7 @@ export default function App() {
           </div>
         </main>
 
-        <section className="mt-20 flex flex-col gap-1 md:flex-row md:items-end md:gap-15">
+        <section className="mt-20 flex items-center gap-1 md:gap-15">
           <div className="w-full overflow-x-auto md:w-auto">
             <a
               href="https://github.com/ibrahim-ansari-code"
@@ -150,7 +169,7 @@ export default function App() {
             </a>
           </div>
 
-          <div className="relative aspect-square w-24 overflow-hidden border border-white/30 bg-black/30 shadow-[0_8px_28px_rgba(0,0,0,0.45)] md:w-[108px]">
+          <div className="relative aspect-square w-[108px] shrink-0 overflow-hidden border border-white/30 bg-black/30 shadow-[0_8px_28px_rgba(0,0,0,0.45)]">
             <img
               src={TRACK.cover}
               alt={`${TRACK.title} cover art`}
@@ -162,15 +181,15 @@ export default function App() {
               <button
                 onClick={togglePlayback}
                 aria-label={isPlaying ? 'Pause' : 'Play'}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/70 bg-black/35 text-white shadow-[0_6px_22px_rgba(0,0,0,0.45)] backdrop-blur-md transition-colors hover:bg-black/50"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-black/35 text-white shadow-[0_6px_22px_rgba(0,0,0,0.45)] backdrop-blur-md transition-colors hover:bg-black/50"
               >
                 {isPlaying ? (
-                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true">
                     <rect x="3" y="2" width="3" height="12" fill="currentColor" rx="1" />
                     <rect x="10" y="2" width="3" height="12" fill="currentColor" rx="1" />
                   </svg>
                 ) : (
-                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true">
                     <path d="M4 2.5L13 8L4 13.5V2.5Z" fill="currentColor" />
                   </svg>
                 )}
@@ -189,6 +208,15 @@ export default function App() {
             </audio>
           </div>
         </section>
+
+        <footer className="mt-16 flex justify-center pb-2">
+          <div
+            className="flex min-h-10 items-center justify-center opacity-95 [filter:grayscale(1)_saturate(0)_brightness(3)_contrast(1.2)]"
+            style={{ transform: 'scale(0.55)', transformOrigin: 'center top' }}
+          >
+            <div ref={webringContainerRef} />
+          </div>
+        </footer>
       </div>
     </div>
   );
