@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { GitHubCalendar } from 'react-github-calendar';
 
 const TRACK = {
@@ -59,6 +60,7 @@ export default function App() {
   };
 
   return (
+    <>
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>
       <div className="relative z-10 px-8 py-20 md:px-16 md:py-32 max-w-3xl mx-auto">
         
@@ -192,5 +194,7 @@ export default function App() {
 
       </div>
     </div>
+    <Analytics />
+    </>
   );
 }
