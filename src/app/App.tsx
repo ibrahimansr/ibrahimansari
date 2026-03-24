@@ -16,9 +16,9 @@ export default function App() {
   const [copied, setCopied] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const sixMonthsAgo = React.useMemo(() => {
+  const sevenMonthsAgo = React.useMemo(() => {
     const date = new Date();
-    date.setMonth(date.getMonth() - 6);
+    date.setMonth(date.getMonth() - 7);
     date.setHours(0, 0, 0, 0);
     return date;
   }, []);
@@ -146,7 +146,7 @@ export default function App() {
                 blockMargin={CONTRIBUTION_BLOCK_MARGIN}
                 fontSize={12}
                 transformData={(data) =>
-                  data.filter((day) => new Date(day.date) >= sixMonthsAgo)
+                  data.filter((day) => new Date(day.date) >= sevenMonthsAgo)
                 }
               />
             </a>
