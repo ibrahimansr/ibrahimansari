@@ -1,6 +1,5 @@
 {
   "framework": "vite",
-  "installCommand": "sh -c 'if command -v git-lfs >/dev/null 2>&1; then git lfs install && git lfs pull || exit 1; fi && npm ci'",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
