@@ -5,6 +5,10 @@ type PlayButtonProps = {
   songIndex: number;
 };
 
+/** Shared with `MusicPlayer` transport controls (same look as homepage row play buttons). */
+export const playControlButtonClassName =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:border-white/45 hover:bg-white/15';
+
 /** Inline row control from legacy `app/about` (“other”) page + `play-button.tsx`. */
 export function PlayButton({ songIndex }: PlayButtonProps) {
   const { currentSongIndex, isPlaying, playSong, setIsPlaying } = useMusic();
@@ -22,7 +26,7 @@ export function PlayButton({ songIndex }: PlayButtonProps) {
     <button
       type="button"
       onClick={handleClick}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:border-white/45 hover:bg-white/15"
+      className={playControlButtonClassName}
       aria-label={
         isCurrentSong && isPlaying ? 'Pause' : `Play track ${songIndex + 1}`
       }

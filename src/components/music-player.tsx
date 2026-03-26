@@ -1,6 +1,7 @@
 import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
 import { useState } from 'react';
 import { useMusic } from '../contexts/MusicContext';
+import { playControlButtonClassName } from './play-button';
 
 /**
  * Glass-style floating player (bottom-left), ported from Next-era
@@ -50,32 +51,32 @@ export function MusicPlayer() {
               <button
                 type="button"
                 onClick={prevSong}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition-transform hover:scale-105 active:scale-95"
+                className={playControlButtonClassName}
                 aria-label="Previous track"
               >
-                <SkipBack size={16} strokeWidth={2.25} />
+                <SkipBack size={15} strokeWidth={2.25} />
               </button>
 
               <button
                 type="button"
                 onClick={togglePlayPause}
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition-transform hover:scale-105 active:scale-95"
+                className={playControlButtonClassName}
                 aria-label={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? (
-                  <Pause size={18} strokeWidth={2.25} fill="currentColor" />
+                  <Pause size={15} strokeWidth={2.25} fill="currentColor" />
                 ) : (
-                  <Play size={18} strokeWidth={2.25} fill="currentColor" className="ml-0.5" />
+                  <Play size={15} strokeWidth={2.25} fill="currentColor" className="ml-0.5" />
                 )}
               </button>
 
               <button
                 type="button"
                 onClick={nextSong}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition-transform hover:scale-105 active:scale-95"
+                className={playControlButtonClassName}
                 aria-label="Next track"
               >
-                <SkipForward size={16} strokeWidth={2.25} />
+                <SkipForward size={15} strokeWidth={2.25} />
               </button>
             </div>
           </div>
@@ -84,13 +85,13 @@ export function MusicPlayer() {
             <button
               type="button"
               onClick={() => setIsExpanded(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black transition-transform hover:scale-105 active:scale-95"
+              className={playControlButtonClassName}
               aria-label={isPlaying ? 'Pause' : 'Play — expand player'}
             >
               {isPlaying ? (
-                <Pause size={16} strokeWidth={2.25} fill="currentColor" />
+                <Pause size={15} strokeWidth={2.25} fill="currentColor" />
               ) : (
-                <Play size={16} strokeWidth={2.25} fill="currentColor" className="ml-0.5" />
+                <Play size={15} strokeWidth={2.25} fill="currentColor" className="ml-0.5" />
               )}
             </button>
           </div>
