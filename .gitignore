@@ -19,3 +19,6 @@ pnpm-debug.log*
 .idea/
 .vscode/
 
+# Large media (exceeds GitHub limit; keep locally or host elsewhere)
+public/projects/ummah-recap.mp4
+

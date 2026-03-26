@@ -30,9 +30,9 @@ export const TRACKS: Track[] = [
   },
   {
     title: 'Cold',
-    artist: 'Chris Stapleton',
+    artist: 'Nemzzz',
     src: '/Cold Official Video.mp3',
-    cover: '/covers/cold.jpg',
+    cover: '/Rents Due Nemzz.jpeg',
   },
   {
     title: 'Everybody Loves Somebody',
@@ -49,7 +49,7 @@ export const TRACKS: Track[] = [
   },
   {
     title: 'Got That Feeling',
-    artist: 'Foster The People',
+    artist: 'Peter Sandberg',
     src: '/got-that-feeling.mp3',
     cover: '/covers/got-that-feeling.jpg',
   },

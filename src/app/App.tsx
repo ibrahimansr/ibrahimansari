@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Route, Routes } from 'react-router';
 import { MusicPlayer } from '../components/music-player';
 import { HomePage } from './HomePage';
-import { OtherPage } from './OtherPage';
+import { ProjectPage } from './ProjectPage';
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
       <MusicPlayer />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/other" element={<OtherPage />} />
+        <Route path="/p/:slug" element={<ProjectPage />} />
       </Routes>
       <Analytics />
     </>
