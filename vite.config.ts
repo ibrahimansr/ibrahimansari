@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite'
+import { createRequire } from 'node:module'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+const require = createRequire(import.meta.url)
 
 export default defineConfig({
   plugins: [
@@ -14,6 +17,8 @@ export default defineConfig({
     alias: {
       // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
+      // Vite sometimes fails on this package's exports map; match Node resolution
+      '@vercel/analytics/react': require.resolve('@vercel/analytics/react'),
     },
   },
 
