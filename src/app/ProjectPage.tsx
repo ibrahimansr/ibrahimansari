@@ -102,15 +102,15 @@ function UmmahBody() {
             Ummah Hacks
           </h1>
           <p className="mb-6 text-sm text-white/55">
-            Muslim-focused hackathon — builders, mentors, and founders in one
-            room for a weekend.
+            hackathon for Muslim builders — a weekend of shipping, mentorship,
+            and meeting people who get it.
           </p>
           <div
             className="space-y-4 text-base leading-relaxed text-white/85"
             style={{ fontWeight: 300 }}
           >
             <p>
-              I organized and hosted{' '}
+              organized and hosted{' '}
               <a
                 href="https://ummahhacks.com/"
                 target="_blank"
@@ -119,12 +119,12 @@ function UmmahBody() {
               >
                 Ummah Hacks
               </a>{' '}
-              as a space where technical ambition meets community: teams ship
-              MVPs, learn from people who have raised and scaled, and meet
-              sponsors who care about the Muslim tech ecosystem.
+              — wanted to build something where Muslim engineers and founders
+              could actually meet each other, ship MVPs, and get feedback from
+              people who&apos;ve raised and scaled.
             </p>
             <p>
-              The event is backed by serious partners — including{' '}
+              got{' '}
               <strong className="font-medium text-white/95">Shopify</strong>,{' '}
               <strong className="font-medium text-white/95">
                 Automax AI (YC F25)
@@ -133,12 +133,11 @@ function UmmahBody() {
               <strong className="font-medium text-white/95">
                 Hex Security (YC W26)
               </strong>
-              , and others — which meant real API credits, mentorship, and
-              visibility for hackers, not just a logo on a slide.
+              , and others to sponsor.
             </p>
             <p>
-              The 2026 edition ran Jan 24–25 at Builder&apos;s Club in Kitchener,
-              with 100+ participants on{' '}
+              the 2026 edition ran Jan 24–25 at Builder&apos;s Club in Kitchener,
+              100+ participants on{' '}
               <a
                 href="https://ummah-hacks.devpost.com/"
                 target="_blank"
@@ -147,8 +146,7 @@ function UmmahBody() {
               >
                 Devpost
               </a>{' '}
-              — prize tracks spanning fintech (VePay), open innovation (Automax
-              AI), medtech (Amano), startup (UMMAH1), charity, and more.
+              — prize tracks in fintech, medtech, open innovation, charity, and more.
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -215,10 +213,9 @@ function ResearchBody() {
       <div className="min-w-0" style={{ fontWeight: 300 }}>
         <h1 className="mb-3 text-2xl font-light md:text-3xl">Research</h1>
         <p className="mb-10 text-sm text-white/50">
-          Two papers; both lean on a small{' '}
-          <strong className="font-medium text-white/80">GAN</strong> stage and an{' '}
-          <strong className="font-medium text-white/80">MLP</strong> head for the
-          numeric core.
+          two published papers — one centered on{' '}
+          <strong className="font-medium text-white/80">CycleGAN</strong>, the other on an{' '}
+          <strong className="font-medium text-white/80">MLP</strong>.
         </p>
 
         <div className="space-y-10 text-sm leading-relaxed text-white/80">
@@ -227,31 +224,32 @@ function ResearchBody() {
               Monarchs &amp; urban heat
             </h2>
             <p>
-              A conditional{' '}
-              <strong className="text-white/90">GAN</strong> synthesizes
-              counterfactual land-cover / thermal patches so we aren&apos;t
-              limited to sparse real tiles when stress-testing the
-              habitat–heat link. Tabular GIS features (impervious fraction,
-              canopy, distance-to-core) feed a compact{' '}
-              <strong className="text-white/90">MLP</strong> that maps each
-              real or GAN-generated scene to a habitat-stress score; the paper
-              compares distributions under observed vs. perturbed UHI.
+              looked at how urban heat islands affect monarch butterfly
+              populations across Toronto, Montréal, and Vancouver. used a{' '}
+              <strong className="text-white/90">CycleGAN</strong> to do
+              unpaired image-to-image translation between satellite imagery
+              and green space layout plans — basically generating equitable
+              urban green space designs from Google Earth data. also built a
+              22-layer CNN from scratch to classify 100 butterfly and moth
+              species so you can actually track whether the green spaces help
+              monarch populations over time.
             </p>
           </section>
 
           <section>
             <h2 className="mb-2 text-xs font-medium uppercase tracking-[0.15em] text-white/45">
-              Ontario education finance (IK)
+              Ontario education budgeting
             </h2>
             <p>
-              Board-level budgets are encoded as fixed-length vectors (grants,
-              instructional, ops, admin, etc.). A lightweight{' '}
-              <strong className="text-white/90">GAN</strong> proposes synthetic
-              “what-if” allocations that stay near the manifold of real boards,
-              which surfaces brittle equilibria. An{' '}
-              <strong className="text-white/90">MLP</strong> regresses those
-              vectors (and GAN samples) onto outcome proxies so skew and tail
-              risk read as numbers, not vibes.
+              Ontario school boards have massive funding gaps — some schools
+              are way over capacity while others sit 40% empty. we pulled
+              financial reports and performance data for all 72 boards and
+              trained an{' '}
+              <strong className="text-white/90">MLP</strong> regression model
+              to predict how budget allocations across 24 categories affect
+              EQAO pass rates and graduation rates. the focus was on mental
+              health, special education, and Indigenous education funding
+              specifically — where the disparities are worst.
             </p>
           </section>
         </div>
@@ -284,56 +282,43 @@ function BaconheadBody() {
         baconhead
       </h1>
       <p className="mb-6 max-w-2xl text-sm text-white/55">
-        Screen-capture vision + fine-tuned classifier + LLM planner — no in-game
-        script injection.
+        vision-based game agent — screen capture in, actions out, nothing
+        injected.
       </p>
       <div
         className="max-w-3xl space-y-4 text-base leading-relaxed text-white/85"
         style={{ fontWeight: 300 }}
       >
         <p>
-          <strong className="font-medium text-white/95">baconhead</strong> stays{' '}
-          <strong className="text-white/95">outside</strong> the Roblox client: it
-          samples pixels from macOS display capture (ScreenCaptureKit /
-          display-stream APIs) and emits keyboard/mouse events through the OS
-          accessibility / event-tap path. That means{' '}
-          <strong className="text-white/95">
-            zero DLL injection, zero Lua hooks, zero memory patching
-          </strong>{' '}
-          — the game sees a normal human peripheral stream, which keeps the threat
-          model closer to “macro tool” than “cheat engine,” at the cost of
-          latency and needing screen real estate dedicated to the window.
+          originally wanted to implement{' '}
+          <a
+            href="https://arxiv.org/html/2505.24784v1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-b border-white/40 hover:border-white"
+          >
+            AXIOM
+          </a>{' '}
+          (active inference with expanding object-centric models) but didn&apos;t
+          have the compute, so i went with DPO instead.
         </p>
         <p>
-          The vision stack isn&apos;t just a pretrained checkpoint off the shelf.
-          <strong className="text-white/95"> GameSense</strong> is{' '}
-          <strong className="text-white/95">fine-tuned</strong> on frames harvested
-          from your own sessions: weak labels come from gameplay phase detectors
-          (death screens, menu idle, round resets), then a compact ViT-style
-          backbone is trained with a frozen lower trunk + warmed classification
-          head, focal loss for rare classes, and heavy{' '}
-          <strong className="text-white/95">on-the-fly augmentation</strong>{' '}
-          (blur, JPEG artifacts, resolution jitter) so it still works when Roblox
-          UI scales or streaming compression kicks in.
+          <strong className="font-medium text-white/95">baconhead</strong> sits
+          completely outside the Roblox client — reads pixels via macOS screen
+          capture and sends inputs through the OS accessibility path. no
+          injection, no hooks, no memory patching. the game just sees normal
+          keyboard and mouse events.
         </p>
         <p>
-          Fine-tuning loop in practice: (1) capture N minutes of labeled frames
-          per title, (2) stratified train/val by map/session, (3) run short
-          cosine-decay schedules with early stopping on macro-F1, (4) export a
-          TorchScript / local weights bundle the runtime loads before the agent
-          loop starts. Precision/recall per class are logged so you know whether
-          “menu” is polluting “death” before you trust the policy head.
-        </p>
-        <p>
-          Above GameSense, a frontier model reads recent frames + the classifier
-          logits and proposes high-level actions; that layer is swappable, but
-          the <em>differentiator</em> is the on-device, fine-tuned perception
-          head that doesn&apos;t phone home for every pixel block.
+          the vision model is fine-tuned on your own gameplay frames — weak
+          labels from phase detectors (death screens, menus, round resets), then
+          a ViT backbone with focal loss and heavy augmentation so it handles
+          UI scaling and compression artifacts. a frontier model sits on top,
+          reads frames + classifier logits, and decides what to do.
         </p>
         <p className="text-white/95">
-          The repo has crossed <strong className="font-semibold">50+ stars</strong>{' '}
-          on GitHub — macOS-first, very much a research-y automation stack rather
-          than a polished consumer app.
+          50+ stars on GitHub — macOS-first, more of a research project than a
+          polished app.
         </p>
       </div>
       <a
@@ -357,7 +342,7 @@ function SurpriseBody() {
           you weren&apos;t supposed to find this
         </h1>
         <p className="mb-6 text-sm text-white/55">
-          A joke build that leaned into the worst parts of “growth.”
+          A joke build that leaned into the worst parts of "growth."
         </p>
         <div
           className="space-y-4 text-base leading-relaxed text-white/85"
@@ -371,7 +356,7 @@ function SurpriseBody() {
             point was to parody startup metrics theater.
           </p>
           <p>
-            If you treat visits, signups, or “traction” here as signal for anything
+            If you treat visits, signups, or "traction" here as signal for anything
             other than comedy, you&apos;ve missed the bit.
           </p>
         </div>
