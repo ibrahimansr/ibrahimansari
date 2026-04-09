@@ -53,7 +53,7 @@ export function HomePage() {
           />
           <nav className="flex flex-wrap items-center justify-end gap-6 text-sm">
             <a
-              href="https://github.com/ibrahim-ansari-code"
+              href="https://github.com/ibrahimansr"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:opacity-70 transition-opacity"
@@ -108,7 +108,7 @@ export function HomePage() {
               </a>{' '}
               (backed by shopify, yc founders, etc.) and made{' '}
               <a
-                href="https://github.com/ibrahim-ansari-code/baconhead"
+                href="https://github.com/ibrahimansr/baconhead"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-b border-white hover:opacity-70 transition-opacity"
@@ -160,14 +160,14 @@ export function HomePage() {
           <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-10">
             <div className="min-w-0 shrink-0 overflow-x-auto">
               <a
-                href="https://github.com/ibrahim-ansari-code"
+                href="https://github.com/ibrahimansr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"
                 aria-label="View GitHub profile and contributions"
               >
                 <GitHubCalendar
-                  username="ibrahim-ansari-code"
+                  username="ibrahimansr"
                   colorScheme="dark"
                   showColorLegend={false}
                   showMonthLabels={false}
