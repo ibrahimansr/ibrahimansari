@@ -1,6 +1,11 @@
-# 👋 welcome
 
-  my personal portfolio
-  
-  take inspo from wherever
+  # Create personal portfolio
+
+  This is a code bundle for Create personal portfolio. The original project is available at https://www.figma.com/design/bdBTdwdYoxzyMMSub81Yam/Create-personal-portfolio.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
   
