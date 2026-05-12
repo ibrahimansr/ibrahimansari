@@ -1,6 +1,9 @@
+import { Analytics } from '@vercel/analytics/react';
+
 export default function App() {
   return (
     <div className="size-full flex items-center justify-center bg-white relative">
+      <Analytics />
       <div className="absolute top-8 right-8 flex gap-6" style={{ fontFamily: 'Gowun Batang, serif', fontSize: '1rem' }}>
         <a href="https://x.com/ibrahimansr" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'blue' }}>
           X
