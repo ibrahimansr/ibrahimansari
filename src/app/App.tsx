@@ -23,9 +23,6 @@ export default function App() {
           I want to become deeply technical, so if you are doing anything research heavy, hmu! I've published 2 ml papers, fine tuned models and set up rl environments at startups, and am working with my best friends to build some cool stuff this summer in toronto and sf.
         </p>
 
-        <p style={{ fontSize: '1.125rem', lineHeight: '1.75' }}>
-          I am joining something new full-time in palo alto soon, but am also actively seeking roles right now
-        </p>
       </div>
     </div>
   );
