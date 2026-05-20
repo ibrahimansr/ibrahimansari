@@ -1,28 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ibrahim Ansari</title>
+    <meta name="description" content="ibrahim ansari — personal site" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: #111;
+        color: #fff;
+        font-family: "Joan", ui-serif, Georgia, serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+      .bg {
+        position: fixed;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0;
+      }
+      .bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .bg-1 { left: -25vw; right: -50vw; bottom: -20vh; aspect-ratio: 1536/1024; }
+      .bg-2 { width: 180vw; aspect-ratio: 1536/1024; left: -60vw; bottom: -12vh; }
+      @media (min-width: 1280px) {
+        .bg-1 { width: 1109px; height: 739px; right: -500px; bottom: -156px; left: auto; aspect-ratio: auto; }
+        .bg-2 { width: 1109px; height: 739px; left: -609px; bottom: -175px; aspect-ratio: auto; }
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        padding: 130px 43px;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.25;
+      }
+      @media (min-width: 1280px) {
+        main { padding: 226px 127px; font-size: 20px; }
+      }
+      p { margin: 0; word-break: break-word; }
+      p + p { margin-top: 1.25em; }
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: 1px;
+      }
+      a:hover { opacity: 0.7; }
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Ibrahim Ansari" />
-  <title>Ibrahim Ansari</title>
-  <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-    }
+      .album-cover {
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        vertical-align: -0.15em;
+        border-radius: 2px;
+        margin-left: 0.4em;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.6);
+        object-fit: cover;
+      }
 
-    #root {
-      height: 100%;
-    }
-  </style>
-</head>
+      .papers {
+        position: relative;
+        display: inline-block;
+      }
+      .papers > summary {
+        list-style: none;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: 1px;
+        display: inline;
+      }
+      .papers > summary::-webkit-details-marker { display: none; }
+      .papers > summary::marker { content: ""; }
+      .papers[open] > summary { opacity: 0.7; }
+      .papers-menu {
+        position: absolute;
+        top: 1.6em;
+        left: 0;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 6px;
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+        min-width: 140px;
+        z-index: 10;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      }
+      .papers-menu a {
+        padding: 6px 10px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 0.95em;
+      }
+      .papers-menu a:hover { background: #2a2a2a; opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="bg bg-1"><img src="assets/bg.png" alt="" /></div>
+    <div class="bg bg-2"><img src="assets/bg.png" alt="" /></div>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
+    <main>
+      <p>hi, i&rsquo;m Ibrahim. i&rsquo;m just a brown guy tryna make it out of uwaterloo.</p>
 
+      <p>i was born in the states, but now im in canada. i used to be really into <a href="https://fortnitetracker.com/profile/all/wigy" target="_blank" rel="noopener noreferrer">fortnite</a> and investing during covid and made my first 10k. after that i published <details class="papers"><summary>2 papers</summary><div class="papers-menu"><a href="https://drive.google.com/file/d/1zw4GxDShfs00zw66bCBYd9MF82Cvmyh_/view" target="_blank" rel="noopener noreferrer">paper 1</a><a href="https://drive.google.com/file/d/13_mV8QIK9et7CNBK_AAbZibdZFb1-7HL/edit" target="_blank" rel="noopener noreferrer">paper 2</a></div></details>, did some research at wwf, and worked at/on a couple startups. rn i&rsquo;ve been really into rl and world models.</p>
+
+      <p>i recently got a full-time offer (that i was super excited for) in palo alto rescinded, and i&rsquo;ve been pretty lost since then. if you have ever been in a similar experience or are hiring research engineering roles, please hmu on <a href="https://x.com/ibrahimansr" target="_blank" rel="noopener noreferrer">x</a>, <a href="https://www.linkedin.com/in/ibrahimansr/" target="_blank" rel="noopener noreferrer">linkedin</a>, <a href="https://github.com/ibrahimansr" target="_blank" rel="noopener noreferrer">github</a>, or <a href="mailto:ibrahim.ansari4161@gmail.com">email</a>.</p>
+
+      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/album/0OAv7DCME2AV4q1KPO95HY?si=Xuxvv8QrTCCchAxSE7CbMQ" target="_blank" rel="noopener noreferrer">iceman<img class="album-cover" src="assets/iceman.jpg" alt="" /></a></p>
+    </main>
+
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      document.addEventListener('pointerdown', function (e) {
+        document.querySelectorAll('details.papers[open]').forEach(function (d) {
+          if (!d.contains(e.target)) d.open = false;
+        });
+      }, true);
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
 </html>
