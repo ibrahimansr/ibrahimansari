@@ -109,6 +109,16 @@
       .papers-menu a:hover { background: #2a2a2a; opacity: 1; }
 
       .inspo { margin-top: 3em; font-size: 0.75em; opacity: 0.5; }
+
+      .webring {
+        position: fixed;
+        left: 50%;
+        bottom: 110px;
+        transform: translateX(-50%) scale(0.55);
+        transform-origin: bottom center;
+        z-index: 2;
+        pointer-events: auto;
+      }
     </style>
   </head>
   <body>
@@ -128,6 +138,10 @@
 
       <p class="inspo">inspo from <a href="https://sameelarif.com/" target="_blank" rel="noopener noreferrer">sameelarif.com</a></p>
     </main>
+
+    <div class="webring">
+      <script src="https://www.uwaterloo.network/embed.js" data-webring data-user="ibrahim-ansari" data-color="white"></script>
+    </div>
 
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
