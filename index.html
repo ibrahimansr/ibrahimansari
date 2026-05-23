@@ -169,6 +169,19 @@
     </main>
 
     <script>
+      (function () {
+        var clickAudio = new Audio('assets/click.wav');
+        clickAudio.preload = 'auto';
+        document.addEventListener('pointerdown', function () {
+          try {
+            var a = clickAudio.cloneNode();
+            a.volume = 0.6;
+            a.play();
+          } catch (e) {}
+        });
+      })();
+    </script>
+    <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
       document.addEventListener('pointerdown', function (e) {
         document.querySelectorAll('details.papers[open]').forEach(function (d) {
