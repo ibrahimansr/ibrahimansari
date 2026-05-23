@@ -84,17 +84,29 @@
       <img src="assets/feed/img14.webp" loading="lazy" alt="" />
       <img src="assets/feed/img15.webp" loading="lazy" alt="" />
       <img src="assets/feed/img16.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img17.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img18.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img19.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img20.webp" loading="lazy" alt="" />
       <img src="assets/feed/img21.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img22.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img23.webp" loading="lazy" alt="" />
-      <img src="assets/feed/img24.webp" loading="lazy" alt="" />
       <img src="assets/feed/img25.webp" loading="lazy" alt="" />
+      <img src="assets/feed/img_2178.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/img_2179.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/img_2180.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/img_2181.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/img_2182.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/img_2183.jpg" loading="lazy" alt="" />
+      <img src="assets/feed/spiderman.webp" loading="lazy" alt="" />
     </div>
 
+    <script>
+      (function () {
+        var g = document.querySelector('.gallery');
+        if (!g) return;
+        var imgs = Array.prototype.slice.call(g.children);
+        for (var i = imgs.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = imgs[i]; imgs[i] = imgs[j]; imgs[j] = tmp;
+        }
+        imgs.forEach(function (n) { g.appendChild(n); });
+      })();
+    </script>
     <script defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>
