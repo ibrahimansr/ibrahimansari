@@ -106,6 +106,7 @@
       <img src="assets/feed/img_2183.jpg" loading="lazy" alt="" />
       <img src="assets/feed/spiderman.webp" loading="lazy" alt="" />
       <img src="assets/feed/hailmary.webp" loading="lazy" alt="" />
+      <img src="assets/feed/jf17.jpg" loading="lazy" alt="" />
     </div>
 
     <footer class="credit">
@@ -116,12 +117,24 @@
       (function () {
         var clickAudio = new Audio('assets/click.wav');
         clickAudio.preload = 'auto';
-        document.addEventListener('pointerdown', function () {
+        function playClick() {
           try {
             var a = clickAudio.cloneNode();
-            a.volume = 0.6;
+            a.volume = 0.3;
             a.play();
           } catch (e) {}
+        }
+        document.addEventListener('pointerdown', playClick);
+        document.addEventListener('click', function (e) {
+          var link = e.target.closest && e.target.closest('a[href]');
+          if (!link) return;
+          var href = link.getAttribute('href');
+          if (!href || href.startsWith('#')) return;
+          var target = link.getAttribute('target');
+          if (target && target !== '_self') return;
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          setTimeout(function () { window.location.href = link.href; }, 180);
         });
       })();
     </script>
