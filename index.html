@@ -18,11 +18,19 @@
         color: #fff;
         font-family: "Joan", ui-serif, Georgia, serif;
         min-height: 100vh;
+        min-height: 100svh;
         overflow: hidden;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       @media (min-width: 700px) {
-        body { overflow-x: hidden; overflow-y: visible; }
+        body {
+          overflow-x: hidden;
+          overflow-y: visible;
+          display: block;
+        }
       }
       html { overflow: hidden; }
       @media (min-width: 700px) {
@@ -57,8 +65,8 @@
       main {
         position: relative;
         z-index: 1;
-        padding: 56px 24px 28px;
-        padding-top: clamp(36px, 7svh, 80px);
+        padding: 24px;
+        width: 100%;
         max-width: 100%;
         font-size: 14px;
         line-height: 1.3;
