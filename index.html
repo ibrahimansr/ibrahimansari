@@ -230,28 +230,23 @@
         if (cachedPreview) { audio.src = cachedPreview; hasPreview = true; }
 
         if (!cachedPreview || !cachedTitle || !cachedCover) {
-          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(SONG_URL))
-            .then(function (r) { return r.json(); })
-            .then(function (d) {
-              if (!d || !d.title) throw new Error('no title');
-              titleEl.textContent = d.title.toLowerCase();
-              try { sessionStorage.setItem(titleKey, d.title); } catch (e) {}
-              if (d.thumbnail_url) {
-                coverEl.src = d.thumbnail_url;
-                try { sessionStorage.setItem(coverKey, d.thumbnail_url); } catch (e) {}
-              }
-              if (cachedPreview) return null;
-              var q = encodeURIComponent(d.title);
-              return fetch('https://itunes.apple.com/search?term=' + q + '&media=music&entity=song&limit=1');
-            })
-            .then(function (r) { return r ? r.json() : null; })
+          fetch('/api/preview?url=' + encodeURIComponent(SONG_URL))
+            .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (d) {
               if (!d) return;
-              var url = d && d.results && d.results[0] && d.results[0].previewUrl;
-              if (!url) return;
-              audio.src = url;
-              hasPreview = true;
-              try { sessionStorage.setItem(previewKey, url); } catch (e) {}
+              if (d.title) {
+                titleEl.textContent = d.title.toLowerCase();
+                try { sessionStorage.setItem(titleKey, d.title); } catch (e) {}
+              }
+              if (d.cover) {
+                coverEl.src = d.cover;
+                try { sessionStorage.setItem(coverKey, d.cover); } catch (e) {}
+              }
+              if (d.preview && !cachedPreview) {
+                audio.src = d.preview;
+                hasPreview = true;
+                try { sessionStorage.setItem(previewKey, d.preview); } catch (e) {}
+              }
             })
             .catch(function () {});
         }
