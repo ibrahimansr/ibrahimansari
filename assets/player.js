@@ -9,7 +9,7 @@
 
   // create audio element synchronously at page load so it always exists
   var audio = new Audio();
-  audio.preload = 'auto';
+  audio.preload = 'none';
   audio.loop = true;
   var btn = null;
   var pendingPlay = false;
@@ -43,6 +43,10 @@
   audio.addEventListener('play', function () { setBtn(); saveState(); });
   audio.addEventListener('pause', function () { setBtn(); saveState(); });
   audio.addEventListener('canplay', function () {
+    if (wantsResumeAt !== null) {
+      try { audio.currentTime = wantsResumeAt; } catch (e) {}
+      wantsResumeAt = null;
+    }
     setBtn();
     if (pendingPlay) {
       pendingPlay = false;
@@ -64,24 +68,28 @@
     document.addEventListener('keydown', resume, true);
   }
 
+  var wantsResumeAt = null;
   function setSrc(previewUrl) {
     if (audio.src) return;
     audio.src = previewUrl;
-    try { audio.load(); } catch (e) {}
     setBtn();
-
     var s = loadState();
-    if (s.t) {
-      try { audio.currentTime = s.t; } catch (e) {}
-    }
+    if (s.t) wantsResumeAt = s.t;
+    var hasButton = !!document.querySelector('.play-btn');
+
     if (s.playing) {
+      // try to auto-resume on both pages. on stuff.html, fall back to wait-for-tap.
+      // on index.html, fall back to waiting for user to click the play button.
       var p = audio.play();
       if (p && p.catch) {
-        p.catch(function () { attachAutoResume(); });
+        p.catch(function () {
+          if (!hasButton) attachAutoResume();
+        });
       }
     }
   }
 
+  var clickWired = false;
   function applyUI(title, cover) {
     var link = document.querySelector('.song-link');
     var titleEl = document.querySelector('.song-title');
@@ -90,34 +98,27 @@
     if (link) link.href = SONG_URL;
     if (titleEl && title) titleEl.textContent = title.toLowerCase();
     if (coverEl && cover) coverEl.src = cover;
-    if (btn) {
+    if (btn && !clickWired) {
+      clickWired = true;
       setBtn();
       btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('[player] click. src=' + !!audio.src + ' rs=' + audio.readyState + ' paused=' + audio.paused + ' err=' + (audio.error && audio.error.message));
         if (!audio.src) {
           pendingPlay = true;
-          console.log('[player] no src, queued play');
           return;
-        }
-        if (audio.readyState === 0) {
-          try { audio.load(); } catch (e) {}
         }
         if (audio.paused) {
           var p = audio.play();
           if (p && p.catch) {
-            p.catch(function (err) {
-              console.error('[player] play() rejected:', err.name, err.message);
-              pendingPlay = true;
-            });
-          } else {
-            console.log('[player] play() did not return a promise');
+            p.catch(function () { pendingPlay = true; });
           }
         } else {
           audio.pause();
         }
       });
+    } else if (btn) {
+      setBtn();
     }
   }
 
