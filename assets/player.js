@@ -52,6 +52,7 @@
     audio.preload = 'auto';
     audio.loop = true;
     audio.src = previewUrl;
+    try { audio.load(); } catch (e) {}
 
     audio.addEventListener('timeupdate', saveState);
     audio.addEventListener('play', function () { setBtn(); saveState(); });
@@ -68,6 +69,21 @@
       if (p && p.catch) {
         p.catch(function () { attachAutoResume(); });
       }
+    }
+  }
+
+  function tryPlay() {
+    if (!audio) return;
+    var p = audio.play();
+    if (p && p.catch) {
+      p.catch(function () {
+        try { audio.load(); } catch (e) {}
+        var retry = function () {
+          audio.removeEventListener('canplay', retry);
+          audio.play().catch(function () {});
+        };
+        audio.addEventListener('canplay', retry);
+      });
     }
   }
 
@@ -88,7 +104,7 @@
           window.open(SONG_URL, '_blank', 'noopener');
           return;
         }
-        if (audio.paused) audio.play().catch(function () {});
+        if (audio.paused) tryPlay();
         else audio.pause();
       });
     }
