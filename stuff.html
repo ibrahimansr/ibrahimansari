@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>stuff i mess with — Ibrahim Ansari</title>
     <meta name="description" content="things ibrahim is into" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E" />
@@ -20,7 +20,7 @@
         min-height: 100vh;
       }
       header {
-        padding: 60px 43px 24px;
+        padding: max(60px, calc(env(safe-area-inset-top) + 30px)) 43px 24px;
         font-size: 18px;
         display: flex;
         align-items: baseline;
