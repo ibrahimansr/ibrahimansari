@@ -134,6 +134,20 @@
       }
       .papers-menu a:hover { background: #2a2a2a; opacity: 1; }
 
+      .play-btn {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 0.4em;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: 1px;
+      }
+      .play-btn:hover { opacity: 0.7; }
+
       .inspo { margin-top: 2.5em; font-size: 0.75em; opacity: 0.5; }
       @media (min-width: 700px) { .inspo { margin-top: 1.5em; } }
 
@@ -170,7 +184,8 @@
 
       <p>i recently got a full-time offer (that i was super excited for) in palo alto rescinded, and i&rsquo;ve been pretty lost since then. if you have ever been in a similar experience or are hiring research engineering roles, please hmu on <a href="https://x.com/ibrahimansr" target="_blank" rel="noopener noreferrer">x</a>, <a href="https://www.linkedin.com/in/ibrahimansr/" target="_blank" rel="noopener noreferrer">linkedin</a>, <a href="https://github.com/ibrahimansr" target="_blank" rel="noopener noreferrer">github</a>, or <a href="mailto:ibrahim.ansari4161@gmail.com">email</a>.</p>
 
-      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/album/3FLlai6YTV9IwCU0KolG1w?si=GT0H2T52Rz6O2c_cINozVg" target="_blank" rel="noopener noreferrer">pixelated kisses<img class="album-cover" src="assets/iceman.jpg" alt="" /></a></p>
+      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/album/3FLlai6YTV9IwCU0KolG1w?si=GT0H2T52Rz6O2c_cINozVg" target="_blank" rel="noopener noreferrer">pixelated kisses<img class="album-cover" src="assets/iceman.jpg" alt="" /></a><button class="play-btn" type="button">play</button></p>
+
 
       <p><a href="stuff.html">stuff i mess with &rarr;</a></p>
 
@@ -183,26 +198,50 @@
 
     <script>
       (function () {
-        var clickAudio = new Audio('assets/click.wav');
-        clickAudio.preload = 'auto';
-        function playClick() {
-          try {
-            var a = clickAudio.cloneNode();
-            a.volume = 0.3;
-            a.play();
-          } catch (e) {}
+        var btn = document.querySelector('.play-btn');
+        var link = document.querySelector('a[href*="open.spotify.com"]');
+        if (!btn || !link) return;
+        btn.style.display = 'none';
+
+        var audio = new Audio();
+        audio.preload = 'none';
+        var playing = false;
+        function setIcon() {
+          btn.textContent = playing ? 'pause' : 'play';
         }
-        document.addEventListener('pointerdown', playClick);
-        document.addEventListener('click', function (e) {
-          var link = e.target.closest && e.target.closest('a[href]');
-          if (!link) return;
-          var href = link.getAttribute('href');
-          if (!href || href.startsWith('#')) return;
-          var target = link.getAttribute('target');
-          if (target && target !== '_self') return;
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        audio.addEventListener('play', function () { playing = true; setIcon(); });
+        audio.addEventListener('pause', function () { playing = false; setIcon(); });
+        audio.addEventListener('ended', function () { playing = false; setIcon(); });
+
+        var cacheKey = 'preview:' + link.href;
+        var cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          audio.src = cached;
+          btn.style.display = '';
+        } else {
+          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(link.href))
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (!d || !d.title) throw new Error('no title');
+              var q = encodeURIComponent(d.title);
+              return fetch('https://itunes.apple.com/search?term=' + q + '&media=music&entity=song&limit=1');
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              var url = d && d.results && d.results[0] && d.results[0].previewUrl;
+              if (!url) return;
+              audio.src = url;
+              try { sessionStorage.setItem(cacheKey, url); } catch (e) {}
+              btn.style.display = '';
+            })
+            .catch(function () {});
+        }
+
+        btn.addEventListener('click', function (e) {
           e.preventDefault();
-          setTimeout(function () { window.location.href = link.href; }, 180);
+          e.stopPropagation();
+          if (playing) audio.pause();
+          else audio.play().catch(function () {});
         });
       })();
     </script>

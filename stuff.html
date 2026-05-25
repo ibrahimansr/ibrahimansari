@@ -112,31 +112,6 @@
 
     <script>
       (function () {
-        var clickAudio = new Audio('assets/click.wav');
-        clickAudio.preload = 'auto';
-        function playClick() {
-          try {
-            var a = clickAudio.cloneNode();
-            a.volume = 0.3;
-            a.play();
-          } catch (e) {}
-        }
-        document.addEventListener('pointerdown', playClick);
-        document.addEventListener('click', function (e) {
-          var link = e.target.closest && e.target.closest('a[href]');
-          if (!link) return;
-          var href = link.getAttribute('href');
-          if (!href || href.startsWith('#')) return;
-          var target = link.getAttribute('target');
-          if (target && target !== '_self') return;
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-          e.preventDefault();
-          setTimeout(function () { window.location.href = link.href; }, 180);
-        });
-      })();
-    </script>
-    <script>
-      (function () {
         var g = document.querySelector('.gallery');
         if (!g) return;
         var imgs = Array.prototype.slice.call(g.children);
