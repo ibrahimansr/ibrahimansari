@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // change this to swap the song — cover + title auto-update
+      window.SONG_URL = "https://open.spotify.com/track/7KGHenqXZofXNm5MKDbT3J?si=e5c8dbceee2d4fd7";
+    </script>
     <title>Ibrahim Ansari</title>
     <meta name="description" content="ibrahim ansari — personal site" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E" />
@@ -184,7 +188,7 @@
 
       <p>i recently got a full-time offer (that i was super excited for) in palo alto rescinded, and i&rsquo;ve been pretty lost since then. if you have ever been in a similar experience or are hiring research engineering roles, please hmu on <a href="https://x.com/ibrahimansr" target="_blank" rel="noopener noreferrer">x</a>, <a href="https://www.linkedin.com/in/ibrahimansr/" target="_blank" rel="noopener noreferrer">linkedin</a>, <a href="https://github.com/ibrahimansr" target="_blank" rel="noopener noreferrer">github</a>, or <a href="mailto:ibrahim.ansari4161@gmail.com">email</a>.</p>
 
-      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/track/7KGHenqXZofXNm5MKDbT3J?si=e5c8dbceee2d4fd7" target="_blank" rel="noopener noreferrer">pixelated kisses<img class="album-cover" src="assets/iceman.jpg" alt="" /></a><button class="play-btn" type="button">play</button></p>
+      <p>recently i&rsquo;ve been really into <a class="song-link" href="#" target="_blank" rel="noopener noreferrer"><span class="song-title">loading</span><img class="album-cover" src="assets/iceman.jpg" alt="" /></a><button class="play-btn" type="button">play</button></p>
 
 
       <p><a href="stuff.html">stuff i mess with &rarr;</a></p>
@@ -198,9 +202,13 @@
 
     <script>
       (function () {
+        var SONG_URL = window.SONG_URL;
+        var link = document.querySelector('.song-link');
         var btn = document.querySelector('.play-btn');
-        var link = document.querySelector('a[href*="open.spotify.com"]');
-        if (!btn || !link) return;
+        var titleEl = document.querySelector('.song-title');
+        var coverEl = document.querySelector('.album-cover');
+        if (!SONG_URL || !link || !btn || !titleEl || !coverEl) return;
+        link.href = SONG_URL;
         btn.style.display = 'none';
 
         var audio = new Audio();
@@ -211,33 +219,29 @@
         audio.addEventListener('pause', function () { playing = false; setIcon(); });
         audio.addEventListener('ended', function () { playing = false; setIcon(); });
 
-        function setLinkTitle(title) {
-          if (!title) return;
-          var lower = title.toLowerCase();
-          for (var i = 0; i < link.childNodes.length; i++) {
-            var n = link.childNodes[i];
-            if (n.nodeType === 3) { n.nodeValue = lower; return; }
-          }
-          link.insertBefore(document.createTextNode(lower), link.firstChild);
-        }
-
-        var cacheKey = 'preview:' + link.href;
-        var titleKey = 'title:' + link.href;
-        var cached = sessionStorage.getItem(cacheKey);
+        var previewKey = 'preview:' + SONG_URL;
+        var titleKey = 'title:' + SONG_URL;
+        var coverKey = 'cover:' + SONG_URL;
+        var cachedPreview = sessionStorage.getItem(previewKey);
         var cachedTitle = sessionStorage.getItem(titleKey);
-        if (cachedTitle) setLinkTitle(cachedTitle);
-        if (cached) {
-          audio.src = cached;
-          btn.style.display = '';
-        }
-        if (!cached || !cachedTitle) {
-          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(link.href))
+        var cachedCover = sessionStorage.getItem(coverKey);
+
+        if (cachedTitle) titleEl.textContent = cachedTitle.toLowerCase();
+        if (cachedCover) coverEl.src = cachedCover;
+        if (cachedPreview) { audio.src = cachedPreview; btn.style.display = ''; }
+
+        if (!cachedPreview || !cachedTitle || !cachedCover) {
+          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(SONG_URL))
             .then(function (r) { return r.json(); })
             .then(function (d) {
               if (!d || !d.title) throw new Error('no title');
-              setLinkTitle(d.title);
+              titleEl.textContent = d.title.toLowerCase();
               try { sessionStorage.setItem(titleKey, d.title); } catch (e) {}
-              if (cached) return null;
+              if (d.thumbnail_url) {
+                coverEl.src = d.thumbnail_url;
+                try { sessionStorage.setItem(coverKey, d.thumbnail_url); } catch (e) {}
+              }
+              if (cachedPreview) return null;
               var q = encodeURIComponent(d.title);
               return fetch('https://itunes.apple.com/search?term=' + q + '&media=music&entity=song&limit=1');
             })
@@ -247,7 +251,7 @@
               var url = d && d.results && d.results[0] && d.results[0].previewUrl;
               if (!url) return;
               audio.src = url;
-              try { sessionStorage.setItem(cacheKey, url); } catch (e) {}
+              try { sessionStorage.setItem(previewKey, url); } catch (e) {}
               btn.style.display = '';
             })
             .catch(function () {});
@@ -258,26 +262,6 @@
           e.stopPropagation();
           if (playing) audio.pause();
           else audio.play().catch(function () {});
-        });
-      })();
-    </script>
-    <script>
-      (function () {
-        var covers = document.querySelectorAll('a[href*="open.spotify.com"] img.album-cover');
-        covers.forEach(function (img) {
-          var url = img.closest('a').href;
-          var cacheKey = 'spotify-cover:' + url;
-          var cached = sessionStorage.getItem(cacheKey);
-          if (cached) { img.src = cached; return; }
-          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(url))
-            .then(function (r) { return r.json(); })
-            .then(function (d) {
-              if (d && d.thumbnail_url) {
-                img.src = d.thumbnail_url;
-                try { sessionStorage.setItem(cacheKey, d.thumbnail_url); } catch (e) {}
-              }
-            })
-            .catch(function () {});
         });
       })();
     </script>
