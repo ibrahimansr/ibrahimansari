@@ -170,7 +170,7 @@
 
       <p>i recently got a full-time offer (that i was super excited for) in palo alto rescinded, and i&rsquo;ve been pretty lost since then. if you have ever been in a similar experience or are hiring research engineering roles, please hmu on <a href="https://x.com/ibrahimansr" target="_blank" rel="noopener noreferrer">x</a>, <a href="https://www.linkedin.com/in/ibrahimansr/" target="_blank" rel="noopener noreferrer">linkedin</a>, <a href="https://github.com/ibrahimansr" target="_blank" rel="noopener noreferrer">github</a>, or <a href="mailto:ibrahim.ansari4161@gmail.com">email</a>.</p>
 
-      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/album/0OAv7DCME2AV4q1KPO95HY?si=Xuxvv8QrTCCchAxSE7CbMQ" target="_blank" rel="noopener noreferrer">iceman<img class="album-cover" src="assets/iceman.jpg" alt="" /></a></p>
+      <p>recently i&rsquo;ve been really into <a href="https://open.spotify.com/album/3FLlai6YTV9IwCU0KolG1w?si=GT0H2T52Rz6O2c_cINozVg" target="_blank" rel="noopener noreferrer">pixelated kisses<img class="album-cover" src="assets/iceman.jpg" alt="" /></a></p>
 
       <p><a href="stuff.html">stuff i mess with &rarr;</a></p>
 
@@ -203,6 +203,26 @@
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
           setTimeout(function () { window.location.href = link.href; }, 180);
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var covers = document.querySelectorAll('a[href*="open.spotify.com"] img.album-cover');
+        covers.forEach(function (img) {
+          var url = img.closest('a').href;
+          var cacheKey = 'spotify-cover:' + url;
+          var cached = sessionStorage.getItem(cacheKey);
+          if (cached) { img.src = cached; return; }
+          fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(url))
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (d && d.thumbnail_url) {
+                img.src = d.thumbnail_url;
+                try { sessionStorage.setItem(cacheKey, d.thumbnail_url); } catch (e) {}
+              }
+            })
+            .catch(function () {});
         });
       })();
     </script>
