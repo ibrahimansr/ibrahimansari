@@ -3,9 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      window.SONG_URL = "https://open.spotify.com/track/2OZVskV28xxJjjhQqKTLSg?si=d288262368a94834";
-    </script>
     <title>Ibrahim Ansari</title>
     <meta name="description" content="ibrahim ansari — personal site" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E" />
@@ -199,67 +196,7 @@
       </div>
     </main>
 
-    <script>
-      (function () {
-        var SONG_URL = window.SONG_URL;
-        var link = document.querySelector('.song-link');
-        var btn = document.querySelector('.play-btn');
-        var titleEl = document.querySelector('.song-title');
-        var coverEl = document.querySelector('.album-cover');
-        if (!SONG_URL || !link || !btn || !titleEl || !coverEl) return;
-        link.href = SONG_URL;
-
-        var audio = new Audio();
-        audio.preload = 'none';
-        var playing = false;
-        var hasPreview = false;
-        function setIcon() { btn.textContent = playing ? 'pause' : 'play'; }
-        audio.addEventListener('play', function () { playing = true; setIcon(); });
-        audio.addEventListener('pause', function () { playing = false; setIcon(); });
-        audio.addEventListener('ended', function () { playing = false; setIcon(); });
-
-        var previewKey = 'preview:' + SONG_URL;
-        var titleKey = 'title:' + SONG_URL;
-        var coverKey = 'cover:' + SONG_URL;
-        var cachedPreview = sessionStorage.getItem(previewKey);
-        var cachedTitle = sessionStorage.getItem(titleKey);
-        var cachedCover = sessionStorage.getItem(coverKey);
-
-        if (cachedTitle) titleEl.textContent = cachedTitle.toLowerCase();
-        if (cachedCover) coverEl.src = cachedCover;
-        if (cachedPreview) { audio.src = cachedPreview; hasPreview = true; }
-
-        if (!cachedPreview || !cachedTitle || !cachedCover) {
-          fetch('/api/preview?url=' + encodeURIComponent(SONG_URL))
-            .then(function (r) { return r.ok ? r.json() : null; })
-            .then(function (d) {
-              if (!d) return;
-              if (d.title) {
-                titleEl.textContent = d.title.toLowerCase();
-                try { sessionStorage.setItem(titleKey, d.title); } catch (e) {}
-              }
-              if (d.cover) {
-                coverEl.src = d.cover;
-                try { sessionStorage.setItem(coverKey, d.cover); } catch (e) {}
-              }
-              if (d.preview && !cachedPreview) {
-                audio.src = d.preview;
-                hasPreview = true;
-                try { sessionStorage.setItem(previewKey, d.preview); } catch (e) {}
-              }
-            })
-            .catch(function () {});
-        }
-
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (!hasPreview) { window.open(SONG_URL, '_blank', 'noopener'); return; }
-          if (playing) audio.pause();
-          else audio.play().catch(function () {});
-        });
-      })();
-    </script>
+    <script src="assets/player.js"></script>
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
       document.addEventListener('pointerdown', function (e) {
