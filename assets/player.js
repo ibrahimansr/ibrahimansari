@@ -7,16 +7,21 @@
   var COVER_KEY = 'cover:' + SONG_URL;
   var STATE_KEY = 'songState';
 
-  var audio = null;
+  // create audio element synchronously at page load so it always exists
+  var audio = new Audio();
+  audio.preload = 'auto';
+  audio.loop = true;
   var btn = null;
+  var pendingPlay = false;
 
   function setBtn() {
     if (!btn) return;
-    btn.textContent = audio && !audio.paused ? 'pause' : 'play';
+    if (!audio.src) { btn.textContent = 'loading'; return; }
+    btn.textContent = audio.paused ? 'play' : 'pause';
   }
 
   function saveState() {
-    if (!audio || !audio.src) return;
+    if (!audio.src) return;
     try {
       sessionStorage.setItem(STATE_KEY, JSON.stringify({
         t: audio.currentTime,
@@ -34,9 +39,22 @@
     } catch (e) { return {}; }
   }
 
+  audio.addEventListener('timeupdate', saveState);
+  audio.addEventListener('play', function () { setBtn(); saveState(); });
+  audio.addEventListener('pause', function () { setBtn(); saveState(); });
+  audio.addEventListener('canplay', function () {
+    setBtn();
+    if (pendingPlay) {
+      pendingPlay = false;
+      audio.play().catch(function () {});
+    }
+  });
+  window.addEventListener('pagehide', saveState);
+  window.addEventListener('beforeunload', saveState);
+
   function attachAutoResume() {
     var resume = function () {
-      if (audio && audio.paused) audio.play().catch(function () {});
+      if (audio.paused) audio.play().catch(function () {});
       document.removeEventListener('click', resume, true);
       document.removeEventListener('touchstart', resume, true);
       document.removeEventListener('keydown', resume, true);
@@ -46,19 +64,11 @@
     document.addEventListener('keydown', resume, true);
   }
 
-  function initAudio(previewUrl) {
-    if (audio) return;
-    audio = new Audio();
-    audio.preload = 'auto';
-    audio.loop = true;
+  function setSrc(previewUrl) {
+    if (audio.src) return;
     audio.src = previewUrl;
     try { audio.load(); } catch (e) {}
-
-    audio.addEventListener('timeupdate', saveState);
-    audio.addEventListener('play', function () { setBtn(); saveState(); });
-    audio.addEventListener('pause', function () { setBtn(); saveState(); });
-    window.addEventListener('pagehide', saveState);
-    window.addEventListener('beforeunload', saveState);
+    setBtn();
 
     var s = loadState();
     if (s.t) {
@@ -69,21 +79,6 @@
       if (p && p.catch) {
         p.catch(function () { attachAutoResume(); });
       }
-    }
-  }
-
-  function tryPlay() {
-    if (!audio) return;
-    var p = audio.play();
-    if (p && p.catch) {
-      p.catch(function () {
-        try { audio.load(); } catch (e) {}
-        var retry = function () {
-          audio.removeEventListener('canplay', retry);
-          audio.play().catch(function () {});
-        };
-        audio.addEventListener('canplay', retry);
-      });
     }
   }
 
@@ -100,12 +95,23 @@
       btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (!audio || !audio.src) {
-          window.open(SONG_URL, '_blank', 'noopener');
+        if (!audio.src) {
+          // preview not loaded yet — queue play for when it is
+          pendingPlay = true;
           return;
         }
-        if (audio.paused) tryPlay();
-        else audio.pause();
+        // iOS unlock: call load() inside the gesture if audio isn't ready
+        if (audio.readyState === 0) {
+          try { audio.load(); } catch (e) {}
+        }
+        if (audio.paused) {
+          var p = audio.play();
+          if (p && p.catch) {
+            p.catch(function () { pendingPlay = true; });
+          }
+        } else {
+          audio.pause();
+        }
       });
     }
   }
@@ -114,7 +120,7 @@
   var cachedTitle = sessionStorage.getItem(TITLE_KEY);
   var cachedCover = sessionStorage.getItem(COVER_KEY);
 
-  if (cachedPreview) initAudio(cachedPreview);
+  if (cachedPreview) setSrc(cachedPreview);
   applyUI(cachedTitle, cachedCover);
 
   if (!cachedPreview || !cachedTitle || !cachedCover) {
@@ -126,7 +132,7 @@
         if (d.cover) { try { sessionStorage.setItem(COVER_KEY, d.cover); } catch (e) {} }
         if (d.preview && !cachedPreview) {
           try { sessionStorage.setItem(PREVIEW_KEY, d.preview); } catch (e) {}
-          initAudio(d.preview);
+          setSrc(d.preview);
         }
         applyUI(d.title || cachedTitle, d.cover || cachedCover);
       })
