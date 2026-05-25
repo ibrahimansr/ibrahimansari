@@ -206,28 +206,44 @@
         var audio = new Audio();
         audio.preload = 'none';
         var playing = false;
-        function setIcon() {
-          btn.textContent = playing ? 'pause' : 'play';
-        }
+        function setIcon() { btn.textContent = playing ? 'pause' : 'play'; }
         audio.addEventListener('play', function () { playing = true; setIcon(); });
         audio.addEventListener('pause', function () { playing = false; setIcon(); });
         audio.addEventListener('ended', function () { playing = false; setIcon(); });
 
+        function setLinkTitle(title) {
+          if (!title) return;
+          var lower = title.toLowerCase();
+          for (var i = 0; i < link.childNodes.length; i++) {
+            var n = link.childNodes[i];
+            if (n.nodeType === 3) { n.nodeValue = lower; return; }
+          }
+          link.insertBefore(document.createTextNode(lower), link.firstChild);
+        }
+
         var cacheKey = 'preview:' + link.href;
+        var titleKey = 'title:' + link.href;
         var cached = sessionStorage.getItem(cacheKey);
+        var cachedTitle = sessionStorage.getItem(titleKey);
+        if (cachedTitle) setLinkTitle(cachedTitle);
         if (cached) {
           audio.src = cached;
           btn.style.display = '';
-        } else {
+        }
+        if (!cached || !cachedTitle) {
           fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(link.href))
             .then(function (r) { return r.json(); })
             .then(function (d) {
               if (!d || !d.title) throw new Error('no title');
+              setLinkTitle(d.title);
+              try { sessionStorage.setItem(titleKey, d.title); } catch (e) {}
+              if (cached) return null;
               var q = encodeURIComponent(d.title);
               return fetch('https://itunes.apple.com/search?term=' + q + '&media=music&entity=song&limit=1');
             })
-            .then(function (r) { return r.json(); })
+            .then(function (r) { return r ? r.json() : null; })
             .then(function (d) {
+              if (!d) return;
               var url = d && d.results && d.results[0] && d.results[0].previewUrl;
               if (!url) return;
               audio.src = url;
