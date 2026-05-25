@@ -41,6 +41,10 @@
         .bg-1 { width: 1109px; height: 739px; right: -500px; bottom: -156px; left: auto; aspect-ratio: auto; }
         .bg-2 { width: 1109px; height: 739px; left: -609px; bottom: -175px; aspect-ratio: auto; }
       }
+      @media (min-width: 1280px) and (max-height: 900px) {
+        .bg-1 { width: 82vh; height: 55vh; right: -28vh; bottom: -12vh; }
+        .bg-2 { width: 82vh; height: 55vh; left: -34vh; bottom: -14vh; }
+      }
       main {
         position: relative;
         z-index: 1;
@@ -54,6 +58,9 @@
       }
       @media (min-width: 1280px) {
         main { padding: 226px 127px; font-size: 20px; }
+      }
+      @media (min-width: 1280px) and (max-height: 900px) {
+        main { padding: 14vh 127px; font-size: 18px; }
       }
       p { margin: 0; word-break: break-word; }
       p + p { margin-top: 0.9em; }
