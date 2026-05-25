@@ -95,19 +95,24 @@
       btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
+        console.log('[player] click. src=' + !!audio.src + ' rs=' + audio.readyState + ' paused=' + audio.paused + ' err=' + (audio.error && audio.error.message));
         if (!audio.src) {
-          // preview not loaded yet — queue play for when it is
           pendingPlay = true;
+          console.log('[player] no src, queued play');
           return;
         }
-        // iOS unlock: call load() inside the gesture if audio isn't ready
         if (audio.readyState === 0) {
           try { audio.load(); } catch (e) {}
         }
         if (audio.paused) {
           var p = audio.play();
           if (p && p.catch) {
-            p.catch(function () { pendingPlay = true; });
+            p.catch(function (err) {
+              console.error('[player] play() rejected:', err.name, err.message);
+              pendingPlay = true;
+            });
+          } else {
+            console.log('[player] play() did not return a promise');
           }
         } else {
           audio.pause();
