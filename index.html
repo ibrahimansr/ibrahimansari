@@ -208,11 +208,11 @@
         var coverEl = document.querySelector('.album-cover');
         if (!SONG_URL || !link || !btn || !titleEl || !coverEl) return;
         link.href = SONG_URL;
-        btn.style.display = 'none';
 
         var audio = new Audio();
         audio.preload = 'none';
         var playing = false;
+        var hasPreview = false;
         function setIcon() { btn.textContent = playing ? 'pause' : 'play'; }
         audio.addEventListener('play', function () { playing = true; setIcon(); });
         audio.addEventListener('pause', function () { playing = false; setIcon(); });
@@ -227,7 +227,7 @@
 
         if (cachedTitle) titleEl.textContent = cachedTitle.toLowerCase();
         if (cachedCover) coverEl.src = cachedCover;
-        if (cachedPreview) { audio.src = cachedPreview; btn.style.display = ''; }
+        if (cachedPreview) { audio.src = cachedPreview; hasPreview = true; }
 
         if (!cachedPreview || !cachedTitle || !cachedCover) {
           fetch('https://open.spotify.com/oembed?url=' + encodeURIComponent(SONG_URL))
@@ -250,8 +250,8 @@
               var url = d && d.results && d.results[0] && d.results[0].previewUrl;
               if (!url) return;
               audio.src = url;
+              hasPreview = true;
               try { sessionStorage.setItem(previewKey, url); } catch (e) {}
-              btn.style.display = '';
             })
             .catch(function () {});
         }
@@ -259,6 +259,7 @@
         btn.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
+          if (!hasPreview) { window.open(SONG_URL, '_blank', 'noopener'); return; }
           if (playing) audio.pause();
           else audio.play().catch(function () {});
         });
