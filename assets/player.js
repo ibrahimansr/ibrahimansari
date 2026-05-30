@@ -1,6 +1,6 @@
 (function () {
   // change this to swap the song — title, cover, and preview auto-fetch from /api/preview
-  var SONG_URL = "https://open.spotify.com/track/2OZVskV28xxJjjhQqKTLSg?si=d288262368a94834";
+  var SONG_URL = "https://open.spotify.com/track/4eE16RJFDKf2WxBTqqfylu?si=a431f55fc9074a7f";
 
   var PREVIEW_KEY = 'preview:' + SONG_URL;
   var TITLE_KEY = 'title:' + SONG_URL;
