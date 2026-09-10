@@ -1,6 +1,6 @@
 (function () {
   // i only have ts bc i dont have spotify premium
-  var SONG_URL = "https://open.spotify.com/track/4TtFvGGps7haO0XbmhVz2y?si=42358f049cdd4d8a";
+  var SONG_URL = "https://open.spotify.com/track/07kS9TOwKWIp4e6zOXADKi?si=cad10e38e9f24faf";
 
   var PREVIEW_KEY = 'preview:' + SONG_URL;
   var TITLE_KEY = 'title:' + SONG_URL;
