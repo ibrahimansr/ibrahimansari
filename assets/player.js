@@ -172,8 +172,13 @@
       });
       Object.keys(have).forEach(function (k) { if (!want[k]) have[k].remove(); });
       document.body.replaceChildren.apply(document.body, Array.prototype.map.call(doc.body.childNodes, function (n) {
-        return n.tagName === 'SCRIPT' && SKIP.test(n.src) ? document.createComment('') : fresh(n);
+        return document.importNode(n, true);
       }));
+      // imported scripts are inert, nested ones too (the webring's sits inside <main>): swap each for a live copy
+      document.body.querySelectorAll('script').forEach(function (n) {
+        if (SKIP.test(n.src)) n.remove();
+        else n.replaceWith(fresh(n));
+      });
       window.scrollTo(0, 0);
       applyUI(sessionStorage.getItem(TITLE_KEY), sessionStorage.getItem(COVER_KEY));
     }).catch(function () { location.href = href; });

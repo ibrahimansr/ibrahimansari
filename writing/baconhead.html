@@ -68,7 +68,8 @@
     <p>You can't train on live Roblox servers, so I built ten small Roblox-style games in Python: an obby, doors,
       rivals, Steal a Brainrot, etc. Each one has a scripted expert. The expert decides every 100 ms, so three of its
       decisions make one chunk, each held for two 50 ms steps. Labels and the model's actions go through the same
-      function that steps the game, so training and play can't disagree about what a chunk means.</p>
+      function that steps the game, so training and play can't disagree about what a chunk means. The game state also freezes while the model decides its next
+      action.</p>
 
     <h2>Training</h2>
 
