@@ -4,7 +4,7 @@
   // i only have ts bc i dont have spotify premium
   var SONG_URL = "https://open.spotify.com/track/6PYARtb5IfAdxG0ZPFYBSo?si=a894292f8669436d";
 
-  var PREVIEW_KEY = 'preview:' + SONG_URL;
+  var SONG_FILE = '/assets/song.mp3';   // our own file: Spotify's 30 s preview of this track has no vocals
   var TITLE_KEY = 'title:' + SONG_URL;
   var COVER_KEY = 'cover:' + SONG_URL;
   var STATE_KEY = 'songState';
@@ -125,24 +125,19 @@
     }
   }
 
-  var cachedPreview = sessionStorage.getItem(PREVIEW_KEY);
   var cachedTitle = sessionStorage.getItem(TITLE_KEY);
   var cachedCover = sessionStorage.getItem(COVER_KEY);
 
-  if (cachedPreview) setSrc(cachedPreview);
+  setSrc(SONG_FILE);
   applyUI(cachedTitle, cachedCover);
 
-  if (!cachedPreview || !cachedTitle || !cachedCover) {
+  if (!cachedTitle || !cachedCover) {
     fetch('/api/preview?url=' + encodeURIComponent(SONG_URL))
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
         if (!d) return;
         if (d.title) { try { sessionStorage.setItem(TITLE_KEY, d.title); } catch (e) {} }
         if (d.cover) { try { sessionStorage.setItem(COVER_KEY, d.cover); } catch (e) {} }
-        if (d.preview && !cachedPreview) {
-          try { sessionStorage.setItem(PREVIEW_KEY, d.preview); } catch (e) {}
-          setSrc(d.preview);
-        }
         applyUI(d.title || cachedTitle, d.cover || cachedCover);
       })
       .catch(function () {});
