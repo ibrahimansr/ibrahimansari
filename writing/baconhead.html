@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>baconhead — Ibrahim Ansari</title>
+  <meta name="description" content="I trained a 4B vision-language model to play Roblox." />
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}], ignoredClasses: ['nomath']})"></script>
+  <style>
+    /* ponytail: posts scroll; the about page's centered/no-scroll layout doesn't fit long text */
+    html, body { overflow: visible; }
+    body { display: block; padding-bottom: 0; }
+    main { padding-top: 64px; padding-bottom: 96px; }
+    h2 { font-weight: normal; font-size: 1.15em; margin: 2em 0 0.6em; }
+    figure { margin: 1.5em 0; }
+    figure img, figure video { width: 100%; display: block; }
+    pre { overflow-x: auto; font-size: 0.85em; margin: 1em 0; }
+    .katex-display { overflow-x: auto; overflow-y: hidden; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Ibrahim Ansari</h1>
+    <p class="nav"><a href="/">about</a><a class="on" href="/writing.html">writing</a></p>
+
+    <h1>baconhead</h1>
+
+    <figure><img src="/assets/writing/roblox-agent.webp" alt="RobloxAgent" /></figure>
+
+    <p>I trained a 4B vision-language model to play Roblox. It looks at the screen, reads a one-line task, and types out
+      what to do with the keyboard and mouse for the next 300 ms. It has no access to game state, but I distilled game
+      physics into the model.</p>
+
+    <p>The project started because my friend stole one of my rare brainrots in Steal a Brainrot when I went afk.</p>
+
+    <figure><video src="/assets/writing/baconhead-obby.mp4" autoplay muted loop playsinline></video></figure>
+
+    <p>The reason why I chose Roblox specifically is that it is an ideal RL environment. A lot of work I see on games
+      usually involves Minecraft or some gym environment (the ones from OpenAI), which don't generalize the same game
+      physics to other games. The closest thing I've seen is Lumine (<a href="https://arxiv.org/abs/2511.08892">Tan
+        et al. 2025</a>), a VLM that plays Genshin Impact from raw pixels with keyboard and mouse and transfers
+      zero-shot to other open-world games. Roblox has a bunch of games, so self-play and training on behaviour matters much more, and
+      having to actually observe your state rather than all the info being passed to the agent I think makes it
+      fundamentally match an MDP much more.</p>
+
+    <h2>What the model sees</h2>
+
+    <p>Every 300 ms the model gets two 640×360 frames, the one from the last decision and the current one, so it can
+      tell which way things are moving. It answers with a single line:</p>
+
+    <pre><code>45 0 0 | W | W | W Space | W Space | W | W</code></pre>
+
+    <p>The first three numbers are camera yaw and pitch in tenths of a degree, plus scroll. Then come the keys to hold
+      for each of six 50 ms steps. I went with plain text instead of a custom action head because it's only about 20
+      tokens, and it lets the model reuse everything it already knows about reading a screen. The policy is just
+      next-token prediction over that line:</p>
+
+    $$\pi_\theta(a_t \mid s_{t-1}, s_t) = \prod_j \pi_\theta(y_j \mid y_{&lt;j}, s_{t-1}, s_t)$$
+
+    <p>You can't train on live Roblox servers, so I built ten small Roblox-style games in Python: an obby, doors,
+      rivals, Steal a Brainrot, etc. Each one has a scripted expert. The expert decides every 100 ms, so three of its
+      decisions make one chunk, each held for two 50 ms steps. Labels and the model's actions go through the same
+      function that steps the game, so training and play can't disagree about what a chunk means.</p>
+
+    <h2>Training</h2>
+
+    <p>Training is one pipeline with three stages, each there because the previous one hit a wall.</p>
+
+    <p><strong>Behaviour cloning.</strong> First, plain cross-entropy on the expert's actions:</p>
+
+    $$\mathcal{L}_{\text{BC}} = -\,\mathbb{E}_{(s, a^*)}\Big[\sum_j \log \pi_\theta(y^*_j \mid y^*_{&lt;j}, s)\Big]$$
+
+    <p>Two small things made this work much better. 20% of the time, the expert <em>plays</em> a noisy action (the
+      camera nudged by about 10° and one key flipped) while the <em>label</em> stays clean, so the data shows how to
+      recover from mistakes instead of only how to avoid them. And since obby play is mostly holding W, I keep the
+      $k$-th identical chunk in a row with probability $0.5^{k-1}$, so walking doesn't drown out the jumps.</p>
+
+    <p><strong>DAgger.</strong> BC only ever sees states the expert visits. Once the model makes one mistake it's
+      somewhere it has never been, so it makes more, and over a $T$-step episode the errors grow like
+      $O(\varepsilon T^2)$. DAgger (<a href="https://proceedings.mlr.press/v15/ross11a/ross11a.pdf">Ross et al. 2011</a>) fixes this by
+      letting the model drive. In round $k$ the expert takes over with
+      probability $\beta_k = 0.5^k$. Every state the model reaches gets relabelled with what the expert would have
+      done, $a^* = \pi^*(s)$, and goes into the training set. That brings the growth down to $O(\varepsilon T)$, which
+      matters a lot when $T$ is a 60-second episode. The original paper tested it on Super Tux Kart (an open-source
+      Mario Kart clone) and Super Mario Bros. Plain supervised Mario kept getting stuck against obstacles, because the
+      expert always jumped well before reaching them, so it never showed what to do right next to one. DAgger fixed that,
+      and its kart stopped falling off the track entirely after 15 rounds.</p>
+
+    <p>I evaluate on five obby levels the model has never seen, 60 seconds each.</p>
+
+    <figure><img src="/assets/writing/baconhead-loss.webp" alt="training" /></figure>
+
+    <p>The mean sat at exactly 3.8 for BC and the first two DAgger rounds while individual levels moved around a lot,
+      then jumped.</p>
+
+    <p>Imitation is capped by the expert. The model can only get as good as the script it copies, so the last stage
+      throws the labels away and trains on the game itself, with the simplest reward I could defend:</p>
+
+    $$R = \mathbf{1}\big[\text{score}(s_{t+k}) > \text{score}(s_t)\big]$$
+
+    <p>Meaning 1 if you reach the next checkpoint and 0 if you don't. The catch is GRPO's advantage. For 8 episodes
+      from the same start state,</p>
+
+    $$A_i = \frac{R_i - \operatorname{mean}(R)}{\operatorname{std}(R)}$$
+
+    <p>so if all 8 succeed, or all 8 fail, every advantage is zero and nothing is learned. Starting episodes from the
+      beginning of a level, almost everything fails. So episodes start partway through the expert's own run, $k$
+      decisions before a checkpoint. Early on $k = 2$, two good moves from success. Every 250 steps $k$ doubles, up to
+      64, which is close to playing a whole section alone. A KL penalty of 0.01 keeps the policy near the DAgger model
+      while it explores. It runs fully async on two H100s with <a href="https://github.com/radixark/miles">miles</a>:
+      one GPU trains while the other plays, and truncated importance weights correct for rollouts that are a few
+      updates stale.</p>
+
+    <figure><img src="/assets/writing/baconhead-rl.webp" alt="RL reward" /></figure>
+
+    <p>Each time $k$ doubles, success drops because the model now starts further from the checkpoint, and then it climbs
+      back as GRPO finds the moves that work from there. What matters is that the climb keeps happening at $k = 32$ and
+      $64$. If the curve flattened there, the model would just be memorizing the last few seconds before each
+      checkpoint rather than learning to play. It held: held-out obbies went from 7.4 to 9.5 stages, with deaths
+      falling further, since RL mostly fixes the jumps the expert itself was sloppy on.</p>
+
+    <h2>Results and considerations</h2>
+
+    <p>On five held-out obbies, the model went from 0 stages to 3.8 with BC, 7.4 with DAgger, and 9.5 after RL, with
+      deaths falling from 18.4 to about 7 a minute. The process that I ended up with came after trying different
+      methods, like OPD with better models (like Astra and DeepSeek V4.1) and full RL (which failed because if my reward
+      was too difficult then such a small model would get no advantage or just reward hack i.e. figuring out that if it
+      just stayed in place and jumped it would get partial credit). Next I want to run this on Roblox, hopefully with
+      enough compute to serve the model near real-time.</p>
+
+    <p><a href="https://github.com/ibrahimansr/baconhead/tree/main/results/robloxagent">Videos of results</a></p>
+
+    <p>If you want to do something similar to this, I would highly suggest using Modal, since they give you
+      <span class="nomath">$30</span> a month.</p>
+
+    <p>Code and weights: <a href="https://github.com/ibrahimansr/baconhead">github.com/ibrahimansr/baconhead</a> · <a
+        href="https://huggingface.co/ibrahimansr/robloxagent">huggingface.co/ibrahimansr/robloxagent</a> (note that the
+      vision encoder adds more parameters)</p>
+  </main>
+  <script src="/assets/player.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+
+</html>

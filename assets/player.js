@@ -1,6 +1,8 @@
 (function () {
+  if (window.__player) return;   // pages are swapped in place (see go() below), so this runs once per tab
+  window.__player = true;
   // i only have ts bc i dont have spotify premium
-  var SONG_URL = "https://open.spotify.com/track/07kS9TOwKWIp4e6zOXADKi?si=cad10e38e9f24faf";
+  var SONG_URL = "https://open.spotify.com/track/6PYARtb5IfAdxG0ZPFYBSo?si=a894292f8669436d";
 
   var PREVIEW_KEY = 'preview:' + SONG_URL;
   var TITLE_KEY = 'title:' + SONG_URL;
@@ -83,13 +85,14 @@
       var p = audio.play();
       if (p && p.catch) {
         p.catch(function () {
+  if (window.__player) return;   // pages are swapped in place (see go() below), so this runs once per tab
+  window.__player = true;
           if (!hasButton) attachAutoResume();
         });
       }
     }
   }
 
-  var clickWired = false;
   function applyUI(title, cover) {
     var link = document.querySelector('.song-link');
     var titleEl = document.querySelector('.song-title');
@@ -98,8 +101,8 @@
     if (link) link.href = SONG_URL;
     if (titleEl && title) titleEl.textContent = title.toLowerCase();
     if (coverEl && cover) coverEl.src = cover;
-    if (btn && !clickWired) {
-      clickWired = true;
+    if (btn && !btn.dataset.wired) {
+      btn.dataset.wired = '1';
       setBtn();
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -144,4 +147,52 @@
       })
       .catch(function () {});
   }
+  // ── in-place navigation ──
+  // a full page load would kill `audio`, so internal links fetch the next page and swap it in instead
+  // (what the old Next.js version got for free from client-side routing). Any failure falls back to a normal load.
+  var SKIP = /player\.js$|_vercel\/insights/;   // already running; don't run twice
+
+  function fresh(n) {
+    if (n.tagName !== 'SCRIPT') return document.importNode(n, true);
+    var s = document.createElement('script');
+    for (var i = 0; i < n.attributes.length; i++) s.setAttribute(n.attributes[i].name, n.attributes[i].value);
+    s.async = false;   // keep execution order (katex before auto-render)
+    s.text = n.text;
+    return s;
+  }
+
+  function go(href, push) {
+    fetch(href).then(function (r) {
+      if (!r.ok || (r.headers.get('content-type') || '').indexOf('text/html') < 0) throw 0;
+      return r.text();
+    }).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      if (push) history.pushState(null, '', href);
+      document.title = doc.title;
+      var have = {}, want = {};
+      Array.prototype.forEach.call(document.head.children, function (n) { have[n.outerHTML] = n; });
+      Array.prototype.forEach.call(doc.head.children, function (n) {
+        want[n.outerHTML] = 1;
+        if (!have[n.outerHTML]) document.head.appendChild(fresh(n));
+      });
+      Object.keys(have).forEach(function (k) { if (!want[k]) have[k].remove(); });
+      document.body.replaceChildren.apply(document.body, Array.prototype.map.call(doc.body.childNodes, function (n) {
+        return n.tagName === 'SCRIPT' && SKIP.test(n.src) ? document.createComment('') : fresh(n);
+      }));
+      window.scrollTo(0, 0);
+      applyUI(sessionStorage.getItem(TITLE_KEY), sessionStorage.getItem(COVER_KEY));
+    }).catch(function () { location.href = href; });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.pathname.indexOf('/api/') === 0) return;
+    if (url.pathname === location.pathname && url.hash) return;   // same-page anchor
+    e.preventDefault();
+    go(url.href, true);
+  });
+  window.addEventListener('popstate', function () { go(location.href, false); });
 })();

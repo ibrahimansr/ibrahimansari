@@ -287,3 +287,30 @@ h1 {
   display: block;
   margin-bottom: 0.4em;
 }
+
+.album-cover {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.15em;
+  margin-left: 0.4em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  object-fit: cover;
+}
+
+.play-btn {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.4em;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.play-btn:hover {
+  opacity: 0.7;
+}
